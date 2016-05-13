@@ -46,7 +46,7 @@ import java.util.Map;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 
-public class LoginActivity extends AppCompatActivity implements EasyPermissions.PermissionCallbacks {
+public class LoginActivityJava extends AppCompatActivity implements EasyPermissions.PermissionCallbacks {
 
     static final String scriptId = "MnY8PSxhZRgMH3xd97Yjja6iUcBrFPiXa";
 
@@ -331,7 +331,7 @@ public class LoginActivity extends AppCompatActivity implements EasyPermissions.
             final int connectionStatusCode) {
         GoogleApiAvailability apiAvailability = GoogleApiAvailability.getInstance();
         Dialog dialog = apiAvailability.getErrorDialog(
-                LoginActivity.this,
+                LoginActivityJava.this,
                 connectionStatusCode,
                 REQUEST_GOOGLE_PLAY_SERVICES);
         dialog.show();
@@ -484,7 +484,7 @@ public class LoginActivity extends AppCompatActivity implements EasyPermissions.
                 } else if (mLastError instanceof UserRecoverableAuthIOException) {
                     startActivityForResult(
                             ((UserRecoverableAuthIOException) mLastError).getIntent(),
-                            LoginActivity.REQUEST_AUTHORIZATION);
+                            LoginActivityJava.REQUEST_AUTHORIZATION);
                 } else {
                     mOutputText.setText("The following error occurred:\n"
                             + mLastError.getMessage());
