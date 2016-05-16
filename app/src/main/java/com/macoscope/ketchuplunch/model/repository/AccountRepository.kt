@@ -1,4 +1,4 @@
-package com.macoscope.ketchuplunch.model
+package com.macoscope.ketchuplunch.model.repository
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -47,6 +47,7 @@ class AccountRepository {
     fun setAccountName(accountName: String) {
         val editor: SharedPreferences.Editor = sharedPreferences.edit()
         editor.putString(accountNamePrefKey, accountName)
+        editor.apply()
     }
 
     private fun setCredentialSelectedAccountName(accountName: String) {
