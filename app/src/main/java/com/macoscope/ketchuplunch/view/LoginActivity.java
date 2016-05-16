@@ -10,9 +10,9 @@ import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.text.method.ScrollingMovementMethod;
 import android.view.View;
@@ -36,6 +36,9 @@ import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.ExponentialBackOff;
 import com.google.api.services.script.model.ExecutionRequest;
 import com.google.api.services.script.model.Operation;
+import com.macoscope.ketchuplunch.model.Meal;
+import com.macoscope.ketchuplunch.model.MealService;
+import com.macoscope.ketchuplunch.model.ScriptClient;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -48,7 +51,7 @@ import pub.devrel.easypermissions.EasyPermissions;
 
 public class LoginActivity extends AppCompatActivity implements EasyPermissions.PermissionCallbacks {
 
-    static final String scriptId = "MnY8PSxhZRgMH3xd97Yjja6iUcBrFPiXa";
+    public static final String scriptId = "MnY8PSxhZRgMH3xd97Yjja6iUcBrFPiXa";
 
     GoogleAccountCredential mCredential;
     private TextView mOutputText;
@@ -154,6 +157,15 @@ public class LoginActivity extends AppCompatActivity implements EasyPermissions.
         } else if (! isDeviceOnline()) {
             mOutputText.setText("No network connection available.");
         } else {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    List<Meal> userMeals = new MealService(new ScriptClient(mCredential, scriptId)).getUserMeals();
+
+                    userMeals.toString();
+                }
+            }).start();
+
             new MakeRequestTask(mCredential).execute();
         }
     }
@@ -378,15 +390,13 @@ public class LoginActivity extends AppCompatActivity implements EasyPermissions.
          */
         private List<String> getDataFromApi()
                 throws IOException, GoogleAuthException {
-            // ID of the script to call. Acquire this from the Apps Script editor,
-            // under Publish > Deploy as API executable.
 
 
             List<String> folderList = new ArrayList<String>();
 
             // Create an execution request object.
             ExecutionRequest request = new ExecutionRequest()
-                    .setFunction("getFoldersUnderRoot");
+                    .setFunction("getUserPosition").setDevMode(true);
 
             // Make the request.
             Operation op =
