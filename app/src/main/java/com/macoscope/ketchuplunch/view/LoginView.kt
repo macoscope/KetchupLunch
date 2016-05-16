@@ -9,4 +9,5 @@ interface LoginView {
     fun showNoGooglePlayServices()
     fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray)
     fun chooseAccount(userCredential: GoogleAccountCredential, requestCode: Int)
+    fun startLunchActivity()
 }

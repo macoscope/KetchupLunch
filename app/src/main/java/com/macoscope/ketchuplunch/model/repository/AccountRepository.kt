@@ -32,7 +32,6 @@ class AccountRepository {
         credential = googleAccountCredential
         this.context = context
         this.sharedPreferences = sharedPreferences
-        setCredentialSelectedAccountName(getAccountName())
     }
 
     fun getAccountName(): String {

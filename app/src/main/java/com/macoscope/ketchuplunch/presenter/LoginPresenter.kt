@@ -31,7 +31,7 @@ class LoginPresenter(val context: Context, val loginView: LoginView) {
     }
 
     private fun openMealsScreen() {
-        //TODO: implement
+        loginView.startLunchActivity()
     }
 
     private fun chooseAccount() {

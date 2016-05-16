@@ -89,4 +89,10 @@ class LoginActivity : AppCompatActivity(), LoginView, EasyPermissions.Permission
                     Manifest.permission.GET_ACCOUNTS)
         }
     }
+
+    override fun startLunchActivity() {
+        val intent = Intent(this, LunchActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
 }
