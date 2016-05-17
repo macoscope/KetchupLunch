@@ -61,7 +61,7 @@ public class LoginActivity extends AppCompatActivity implements EasyPermissions.
     static final int REQUEST_PERMISSION_GET_ACCOUNTS = 103;
 
     private static final String BUTTON_TEXT = "Call Google Apps Script Execution API";
-    private static final String PREF_ACCOUNT_NAME = "accountName";
+    public static final String PREF_ACCOUNT_NAME = "accountName";
     private static final String[] SCOPES = { "https://www.googleapis.com/auth/spreadsheets" };
 
     /**
