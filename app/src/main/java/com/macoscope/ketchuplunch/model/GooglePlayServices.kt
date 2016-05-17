@@ -1,10 +1,10 @@
-package com.macoscope.ketchuplunch.presenter.helper
+package com.macoscope.ketchuplunch.model
 
 import android.content.Context
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 
-class GooglePlayServicesHelper {
+class GooglePlayServices {
 
     data class CheckAvaialabilityResult(val isAvailable: Boolean, val connectionStatusCode: Int)
 
