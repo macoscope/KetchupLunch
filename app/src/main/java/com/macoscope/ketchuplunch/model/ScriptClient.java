@@ -17,6 +17,9 @@ import java.util.Map;
 
 import timber.log.Timber;
 
+/**
+ * Based on https://developers.google.com/apps-script/guides/rest/quickstart/android#step_5_setup_the_sample
+ */
 public class ScriptClient {
 
     private com.google.api.services.script.Script mService = null;
@@ -35,16 +38,16 @@ public class ScriptClient {
 
     public <T> T getDataFromApi(String function) throws IOException, GoogleAuthException {
         ExecutionRequest request = new ExecutionRequest().setFunction(function);
-        Operation op = mService.scripts().run(projectKey, request).execute();
+        Operation operation = mService.scripts().run(projectKey, request).execute();
 
-        if (op.getError() != null) {
-            logScriptError(op);
+        if (operation.getError() != null) {
+            logScriptError(operation);
             return null;
         }
 
-        if (op.getResponse() != null &&
-                op.getResponse().get("result") != null) {
-            return  (T) (op.getResponse().get("result"));
+        if (operation.getResponse() != null &&
+                operation.getResponse().get("result") != null) {
+            return  (T) (operation.getResponse().get("result"));
         }
 
         return null;
