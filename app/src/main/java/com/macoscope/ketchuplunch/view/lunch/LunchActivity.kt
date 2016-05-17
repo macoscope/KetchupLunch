@@ -1,4 +1,4 @@
-package com.macoscope.ketchuplunch.view
+package com.macoscope.ketchuplunch.view.lunch
 
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton

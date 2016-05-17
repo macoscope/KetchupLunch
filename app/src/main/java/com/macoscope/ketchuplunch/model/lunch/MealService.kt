@@ -1,5 +1,6 @@
-package com.macoscope.ketchuplunch.model
+package com.macoscope.ketchuplunch.model.lunch
 
+import com.macoscope.ketchuplunch.model.ScriptClient
 import java.math.BigDecimal
 
 class MealService(val scriptClient: ScriptClient) {

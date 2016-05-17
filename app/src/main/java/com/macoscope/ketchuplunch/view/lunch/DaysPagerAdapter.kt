@@ -1,4 +1,4 @@
-package com.macoscope.ketchuplunch.view
+package com.macoscope.ketchuplunch.view.lunch
 
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager

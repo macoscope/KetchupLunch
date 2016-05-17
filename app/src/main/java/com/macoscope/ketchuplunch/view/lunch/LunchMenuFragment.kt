@@ -1,4 +1,4 @@
-package com.macoscope.ketchuplunch.view
+package com.macoscope.ketchuplunch.view.lunch
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -6,11 +6,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential
-import com.google.api.client.util.ExponentialBackOff
 import com.macoscope.ketchuplunch.R
-import com.macoscope.ketchuplunch.model.MealService
 import com.macoscope.ketchuplunch.model.ScriptClient
+import com.macoscope.ketchuplunch.model.login.AccountPreferencesFactory
+import com.macoscope.ketchuplunch.model.login.AccountRepository
+import com.macoscope.ketchuplunch.model.login.GoogleCredentialWrapper
+import com.macoscope.ketchuplunch.model.lunch.MealService
+import rx.Observable
+import rx.android.schedulers.AndroidSchedulers
+import rx.lang.kotlin.deferredObservable
+import rx.schedulers.Schedulers
 
 class LunchMenuFragment : Fragment() {
 
@@ -18,16 +23,18 @@ class LunchMenuFragment : Fragment() {
                               savedInstanceState: Bundle?): View? {
         val rootView = inflater!!.inflate(R.layout.fragment_lunch, container, false)
         val dayIndex = arguments.getInt(ARG_SECTION_NUMBER)
-        val accountName = "darek@macoscope.net"
-        val googleAccountCredential = GoogleAccountCredential.usingOAuth2(context.applicationContext,
-                listOf("https://www.googleapis.com/auth/spreadsheets"))
-        googleAccountCredential.selectedAccountName = accountName
-        googleAccountCredential.backOff = ExponentialBackOff()
-        val mealService = MealService(ScriptClient(googleAccountCredential))
-
         val textView = rootView.findViewById(R.id.meal_name) as TextView
 
-        textView.text = mealService.getUserMeals().first().name
+        deferredObservable {
+            val accountRepository = AccountRepository(context, GoogleCredentialWrapper(context), AccountPreferencesFactory(context).getPreferences())
+            val mealService = MealService(ScriptClient(accountRepository.getUserCredentials()))
+            Observable.from(mealService.getUserMeals())
+        }.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe {
+                    textView.text = it.name
+                }
+
         return rootView
     }
 

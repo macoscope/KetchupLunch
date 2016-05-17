@@ -2,14 +2,14 @@ package com.macoscope.ketchuplunch.view
 
 import android.Manifest
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.Snackbar
+import android.support.v7.app.AppCompatActivity
 import com.google.android.gms.common.GoogleApiAvailability
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential
-
 import com.macoscope.ketchuplunch.R
 import com.macoscope.ketchuplunch.presenter.LoginPresenter
+import com.macoscope.ketchuplunch.view.lunch.LunchActivity
 import kotlinx.android.synthetic.main.activity_login.*
 import pub.devrel.easypermissions.EasyPermissions
 
