@@ -4,14 +4,18 @@ import android.accounts.AccountManager
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import com.macoscope.ketchuplunch.model.repository.AccountRepository
+import com.macoscope.ketchuplunch.model.login.AccountPreferencesFactory
+import com.macoscope.ketchuplunch.model.login.AccountRepository
+import com.macoscope.ketchuplunch.model.login.GoogleCredentialWrapper
 import com.macoscope.ketchuplunch.presenter.helper.GooglePlayServicesHelper
 import com.macoscope.ketchuplunch.presenter.helper.NetworkAvailabilityHelper
 import com.macoscope.ketchuplunch.view.LoginView
 
 class LoginPresenter(val context: Context, val loginView: LoginView) {
 
-    private val accountRepository: AccountRepository = AccountRepository(context)
+    private val accountRepository: AccountRepository = AccountRepository(context,
+            GoogleCredentialWrapper(context),
+            AccountPreferencesFactory(context).getPreferences())
     private val REQUEST_ACCOUNT_PICKER = 1000
     private val REQUEST_AUTHORIZATION = 1001
     private val REQUEST_GOOGLE_PLAY_SERVICES = 1002

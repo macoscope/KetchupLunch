@@ -1,4 +1,4 @@
-package com.macoscope.ketchuplunch.model.repository
+package com.macoscope.ketchuplunch.model.login
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -8,30 +8,19 @@ import com.google.api.client.util.ExponentialBackOff
 
 class AccountRepository {
 
-    private val accountPrefrencesName = "ACCOUNT_SHARED_PREFS"
     private val accountNamePrefKey = "ACCOUNT_PREF_KEY"
-    private val scopes: List<String> = listOf("https://www.googleapis.com/auth/spreadsheets")
 
-    private var credential: GoogleAccountCredential
+    private var credentialWrapper: GoogleCredentialWrapper
     private val context: Context
     private val sharedPreferences: SharedPreferences
 
-    constructor(context: Context){
-        credential = GoogleAccountCredential.usingOAuth2(
-                context.applicationContext,
-                scopes).setBackOff(ExponentialBackOff());
-        this.context = context
-        this.sharedPreferences = context.getSharedPreferences(accountPrefrencesName, Context.MODE_PRIVATE)
-        setCredentialSelectedAccountName(getAccountName())
-    }
-
-    @VisibleForTesting
     constructor(context: Context,
-                googleAccountCredential: GoogleAccountCredential,
+                credential: GoogleCredentialWrapper,
                 sharedPreferences: SharedPreferences){
-        credential = googleAccountCredential
+        this.credentialWrapper = credential
         this.context = context
         this.sharedPreferences = sharedPreferences
+        setCredentialSelectedAccountName(getAccountName())
     }
 
     fun getAccountName(): String {
@@ -39,7 +28,7 @@ class AccountRepository {
         return account
     }
 
-    fun getUserCredentials(): GoogleAccountCredential = credential
+    fun getUserCredentials(): GoogleAccountCredential = credentialWrapper.credential
 
     fun isAccountNameDefined(): Boolean = getAccountName() != ""
 
@@ -50,6 +39,8 @@ class AccountRepository {
     }
 
     private fun setCredentialSelectedAccountName(accountName: String) {
-        credential.selectedAccountName = accountName
+        credentialWrapper.setSelectedAccountName(accountName)
     }
+
+
 }
