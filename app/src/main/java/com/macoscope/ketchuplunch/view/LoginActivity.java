@@ -36,9 +36,6 @@ import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.ExponentialBackOff;
 import com.google.api.services.script.model.ExecutionRequest;
 import com.google.api.services.script.model.Operation;
-import com.macoscope.ketchuplunch.model.Meal;
-import com.macoscope.ketchuplunch.model.MealService;
-import com.macoscope.ketchuplunch.model.ScriptClient;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -157,15 +154,6 @@ public class LoginActivity extends AppCompatActivity implements EasyPermissions.
         } else if (! isDeviceOnline()) {
             mOutputText.setText("No network connection available.");
         } else {
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    List<Meal> userMeals = new MealService(new ScriptClient(mCredential, scriptId)).getUserMeals();
-
-                    userMeals.toString();
-                }
-            }).start();
-
             new MakeRequestTask(mCredential).execute();
         }
     }
