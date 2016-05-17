@@ -17,9 +17,12 @@ import java.util.Map;
 
 import timber.log.Timber;
 
+/**
+ * Based on https://developers.google.com/apps-script/guides/rest/quickstart/android#step_5_setup_the_sample
+ */
 public class ScriptClient {
 
-    private com.google.api.services.script.Script mService = null;
+    private com.google.api.services.script.Script script = null;
     private String projectKey;
 
 
@@ -27,7 +30,7 @@ public class ScriptClient {
         this.projectKey = projectKey;
         HttpTransport transport = AndroidHttp.newCompatibleTransport();
         JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
-        mService = new com.google.api.services.script.Script.Builder(
+        script = new com.google.api.services.script.Script.Builder(
                 transport, jsonFactory, setHttpTimeout(credential))
                 .setApplicationName("Google Apps Script Execution API Android Quickstart")
                 .build();
@@ -35,16 +38,16 @@ public class ScriptClient {
 
     public <T> T getDataFromApi(String function) throws IOException, GoogleAuthException {
         ExecutionRequest request = new ExecutionRequest().setFunction(function);
-        Operation op = mService.scripts().run(projectKey, request).execute();
+        Operation operation = script.scripts().run(projectKey, request).execute();
 
-        if (op.getError() != null) {
-            logScriptError(op);
+        if (operation.getError() != null) {
+            logScriptError(operation);
             return null;
         }
 
-        if (op.getResponse() != null &&
-                op.getResponse().get("result") != null) {
-            return  (T) (op.getResponse().get("result"));
+        if (operation.getResponse() != null &&
+                operation.getResponse().get("result") != null) {
+            return  (T) (operation.getResponse().get("result"));
         }
 
         return null;
@@ -59,23 +62,23 @@ public class ScriptClient {
         List<Map<String, Object>> stacktrace =
                 (List<Map<String, Object>>) detail.get("scriptStackTraceElements");
 
-        StringBuilder sb =
+        StringBuilder stringBuilder =
                 new StringBuilder("\nScript error message: ");
-        sb.append(detail.get("errorMessage"));
+        stringBuilder.append(detail.get("errorMessage"));
 
         if (stacktrace != null) {
             // There may not be a stacktrace if the script didn't start
             // executing.
-            sb.append("\nScript error stacktrace:");
+            stringBuilder.append("\nScript error stacktrace:");
             for (Map<String, Object> elem : stacktrace) {
-                sb.append("\n  ");
-                sb.append(elem.get("function"));
-                sb.append(":");
-                sb.append(elem.get("lineNumber"));
+                stringBuilder.append("\n  ");
+                stringBuilder.append(elem.get("function"));
+                stringBuilder.append(":");
+                stringBuilder.append(elem.get("lineNumber"));
             }
         }
-        sb.append("\n");
-        Timber.e(sb.toString());
+        stringBuilder.append("\n");
+        Timber.e(stringBuilder.toString());
     }
 
     private static HttpRequestInitializer setHttpTimeout(

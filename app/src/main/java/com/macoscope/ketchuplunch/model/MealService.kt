@@ -6,14 +6,14 @@ class MealService(val scriptClient: ScriptClient) {
 
 
     fun getUserMeals(): List<Meal> {
-        return scriptClient.getDataFromApi<List<String>>("mealNames")
-                .zip(scriptClient.getDataFromApi<List<BigDecimal>>("mealCount"), { name, count ->
-                    Meal(name, count.toInt(), 0)
-                })
-                .zip(scriptClient.getDataFromApi<List<BigDecimal>>("mealTotalCount"), { meal, totalCount ->
-                    meal.totalCount = totalCount.toInt()
-                    meal
-                })
+        val mealList = scriptClient.getDataFromApi<List<Map<String, Any>>>("meal")
+
+        val meals = mealList.map {
+            it ->
+            Meal(it["name"] as String, (it["count"] as BigDecimal).toInt(), (it["totalCount"] as BigDecimal).toInt())
+        }
+
+        return meals
     }
 }
 
