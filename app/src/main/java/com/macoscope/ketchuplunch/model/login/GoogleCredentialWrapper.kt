@@ -12,7 +12,7 @@ open class GoogleCredentialWrapper(val context: Context) {
             context.applicationContext,
             scopes).setBackOff(ExponentialBackOff());
 
-    fun setSelectedAccountName(accountName: String) {
+    open fun setSelectedAccountName(accountName: String) {
         credential.selectedAccountName = accountName
     }
 }
