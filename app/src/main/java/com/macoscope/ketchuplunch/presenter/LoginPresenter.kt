@@ -7,8 +7,8 @@ import android.content.Intent
 import com.macoscope.ketchuplunch.model.login.AccountPreferencesFactory
 import com.macoscope.ketchuplunch.model.login.AccountRepository
 import com.macoscope.ketchuplunch.model.login.GoogleCredentialWrapper
-import com.macoscope.ketchuplunch.presenter.helper.GooglePlayServicesHelper
-import com.macoscope.ketchuplunch.presenter.helper.NetworkAvailabilityHelper
+import com.macoscope.ketchuplunch.model.GooglePlayServices
+import com.macoscope.ketchuplunch.model.NetworkAvailability
 import com.macoscope.ketchuplunch.view.LoginView
 
 class LoginPresenter(val context: Context, val loginView: LoginView) {
@@ -43,17 +43,17 @@ class LoginPresenter(val context: Context, val loginView: LoginView) {
         loginView.chooseAccount(accountRepository.getUserCredentials(), REQUEST_ACCOUNT_PICKER)
     }
 
-    private fun isGooglePlayServicesAvailable(): Boolean = GooglePlayServicesHelper().isAvailable(context)
+    private fun isGooglePlayServicesAvailable(): Boolean = GooglePlayServices().isAvailable(context)
 
 
     private fun acquireGooglePlayServices() {
-        val (isAvailable, connectionStatusCode) = GooglePlayServicesHelper().acquireServices(context)
+        val (isAvailable, connectionStatusCode) = GooglePlayServices().acquireServices(context)
         if (!isAvailable) {
             loginView.showGooglePlayServicesAvailabilityErrorDialog(connectionStatusCode, REQUEST_GOOGLE_PLAY_SERVICES)
         }
     }
 
-    private fun isDeviceOnline(): Boolean = NetworkAvailabilityHelper().isDeviceOnline(context)
+    private fun isDeviceOnline(): Boolean = NetworkAvailability().isDeviceOnline(context)
 
 
     fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
