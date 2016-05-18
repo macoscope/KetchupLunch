@@ -12,7 +12,7 @@ class LoginUI: AnkoComponent<LoginActivity> {
             id = R.id.login_main_container
             backgroundColor = ContextCompat.getColor(ctx, R.color.colorRed)
 
-            imageView(R.drawable.logo_temporary).lparams {  centerInParent() }
+            imageView(R.drawable.splash_logo).lparams {  centerInParent() }
         }
 
     }
