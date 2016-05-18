@@ -38,7 +38,7 @@ public class ScriptClient {
 
     public <T> T getDataFromApi(String function, List<Object> parameters) throws IOException, GoogleAuthException {
         ExecutionRequest request = new ExecutionRequest().setFunction(function).setParameters(parameters)
-                .setDevMode(true);
+                .setDevMode(false);
         Operation operation = script.scripts().run(projectKey, request).execute();
 
         if (operation.getError() != null) {
