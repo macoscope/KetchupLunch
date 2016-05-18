@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="lunch_menu_list" type="id" />
+    <item name="lunch_menu_name" type="id" />
+    <item name="lunch_menu_count" type="id" />
+</resources>

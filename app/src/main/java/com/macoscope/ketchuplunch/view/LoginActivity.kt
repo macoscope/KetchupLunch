@@ -2,23 +2,19 @@ package com.macoscope.ketchuplunch.view
 
 import android.Manifest
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v4.content.ContextCompat
-import android.view.WindowManager
+import android.support.v7.app.AppCompatActivity
 import android.view.Window
+import android.view.WindowManager
 import android.widget.RelativeLayout
 import com.google.android.gms.common.GoogleApiAvailability
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential
-
 import com.macoscope.ketchuplunch.R
 import com.macoscope.ketchuplunch.presenter.LoginPresenter
-import org.jetbrains.anko.backgroundColor
-import org.jetbrains.anko.dip
-import org.jetbrains.anko.padding
-import org.jetbrains.anko.startActivity
-import org.jetbrains.anko.relativeLayout
+import com.macoscope.ketchuplunch.view.lunch.LunchActivity
+import org.jetbrains.anko.*
 import pub.devrel.easypermissions.EasyPermissions
 
 class LoginActivity : AppCompatActivity(), LoginView, EasyPermissions.PermissionCallbacks {
