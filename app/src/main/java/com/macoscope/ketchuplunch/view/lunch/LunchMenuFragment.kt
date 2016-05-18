@@ -19,7 +19,7 @@ import com.macoscope.ketchuplunch.model.lunch.Meal
 import com.macoscope.ketchuplunch.model.lunch.MealService
 import org.jetbrains.anko.*
 import org.jetbrains.anko.recyclerview.v7.recyclerView
-import org.jetbrains.anko.support.v4.UI
+import org.jetbrains.anko.support.v4.ctx
 import rx.Observable
 import rx.android.schedulers.AndroidSchedulers
 import rx.lang.kotlin.deferredObservable
@@ -31,26 +31,8 @@ class LunchMenuFragment : Fragment() {
                               savedInstanceState: Bundle?): View? {
         val mealList = emptyList<Meal>()
         val listAdapter = LunchMenuAdapter(mealList)
-//        val rootView = LunchMenuUI(listAdapter).createView(AnkoContext.create(ctx, this))
-
-        val rootView = UI {
-            frameLayout() {
-                lparams(width = matchParent, height = matchParent)
-                backgroundColor = Color.RED
-                recyclerView {
-                    backgroundColor = Color.GREEN
-                    id = R.id.lunch_menu_list
-                    lparams(width = matchParent, height = matchParent)
-                    layoutManager = LinearLayoutManager(ctx)
-                    adapter = listAdapter
-                }
-
-            }
-
-
-        }.view
+        val rootView = LunchMenuUI(listAdapter).createView(AnkoContext.create(ctx, this))
         val dayIndex = arguments.getInt(ARG_SECTION_NUMBER)
-
 
         deferredObservable {
             val accountRepository = AccountRepository(context, GoogleCredentialWrapper(context), AccountPreferencesFactory(context).getPreferences())
@@ -134,9 +116,8 @@ class LunchMenuUI(val listAdapter: LunchMenuAdapter) : AnkoComponent<Fragment> {
                     adapter = listAdapter
                 }
             }
-        }.view()
+        }
     }
-
 }
 
 class LunchMenuItemUI : AnkoComponent<ViewGroup> {
@@ -152,6 +133,6 @@ class LunchMenuItemUI : AnkoComponent<ViewGroup> {
                 textView { id = R.id.lunch_menu_count }
             }
 
-        }.view()
+        }
     }
 }
