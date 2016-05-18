@@ -36,8 +36,9 @@ public class ScriptClient {
                 .build();
     }
 
-    public <T> T getDataFromApi(String function) throws IOException, GoogleAuthException {
-        ExecutionRequest request = new ExecutionRequest().setFunction(function);
+    public <T> T getDataFromApi(String function, List<Object> parameters) throws IOException, GoogleAuthException {
+        ExecutionRequest request = new ExecutionRequest().setFunction(function).setParameters(parameters)
+                .setDevMode(true);
         Operation operation = script.scripts().run(projectKey, request).execute();
 
         if (operation.getError() != null) {
@@ -47,7 +48,7 @@ public class ScriptClient {
 
         if (operation.getResponse() != null &&
                 operation.getResponse().get("result") != null) {
-            return  (T) (operation.getResponse().get("result"));
+            return (T) (operation.getResponse().get("result"));
         }
 
         return null;
