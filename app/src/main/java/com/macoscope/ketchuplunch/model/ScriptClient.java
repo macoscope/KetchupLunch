@@ -28,7 +28,6 @@ public class ScriptClient {
 
 
     public ScriptClient(GoogleAccountCredential credential) {
-        this.projectKey = "MnY8PSxhZRgMH3xd97Yjja6iUcBrFPiXa";
         HttpTransport transport = AndroidHttp.newCompatibleTransport();
         JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
         script = new com.google.api.services.script.Script.Builder(
