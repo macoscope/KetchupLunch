@@ -19,7 +19,7 @@ import com.macoscope.ketchuplunch.model.lunch.Meal
 import com.macoscope.ketchuplunch.model.lunch.MealService
 import org.jetbrains.anko.*
 import org.jetbrains.anko.recyclerview.v7.recyclerView
-import org.jetbrains.anko.support.v4.ctx
+import org.jetbrains.anko.support.v4.UI
 import rx.Observable
 import rx.android.schedulers.AndroidSchedulers
 import rx.lang.kotlin.deferredObservable
@@ -31,7 +31,24 @@ class LunchMenuFragment : Fragment() {
                               savedInstanceState: Bundle?): View? {
         val mealList = emptyList<Meal>()
         val listAdapter = LunchMenuAdapter(mealList)
-        val rootView = LunchMenuUI(listAdapter).createView(AnkoContext.create(ctx, this))
+//        val rootView = LunchMenuUI(listAdapter).createView(AnkoContext.create(ctx, this))
+
+        val rootView = UI {
+            frameLayout() {
+                lparams(width = matchParent, height = matchParent)
+                backgroundColor = Color.RED
+                recyclerView {
+                    backgroundColor = Color.GREEN
+                    id = R.id.lunch_menu_list
+                    lparams(width = matchParent, height = matchParent)
+                    layoutManager = LinearLayoutManager(ctx)
+                    adapter = listAdapter
+                }
+
+            }
+
+
+        }.view
         val dayIndex = arguments.getInt(ARG_SECTION_NUMBER)
 
 
@@ -65,7 +82,20 @@ class LunchMenuFragment : Fragment() {
 
 class LunchMenuAdapter(var mealList: List<Meal>) : RecyclerView.Adapter<LaunchMenuItemViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): LaunchMenuItemViewHolder? {
-        return LaunchMenuItemViewHolder(LunchMenuItemUI().createView(AnkoContext.create(parent!!.context, parent)))
+        //return LaunchMenuItemViewHolder(LunchMenuItemUI().createView(AnkoContext.create(parent!!.context, parent)))
+        val itemView = with(parent!!.context){
+
+            linearLayout {
+                lparams(width = matchParent, height = dip(48))
+                backgroundColor = Color.GRAY
+                orientation = LinearLayout.HORIZONTAL
+
+                textView { id = R.id.lunch_menu_name }
+                textView { id = R.id.lunch_menu_count }
+            }
+
+        }.view()
+        return LaunchMenuItemViewHolder(itemView)
     }
 
     override fun onBindViewHolder(holder: LaunchMenuItemViewHolder?, position: Int) {
@@ -80,13 +110,12 @@ class LunchMenuAdapter(var mealList: List<Meal>) : RecyclerView.Adapter<LaunchMe
 }
 
 class LaunchMenuItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-    val name: TextView = itemView.find(R.id.lunch_menu_name)
-    val count: TextView = itemView.find(R.id.lunch_menu_count)
+//    val name: TextView = itemView.find(R.id.lunch_menu_name)
+//    val count: TextView = itemView.find(R.id.lunch_menu_count)
 
     fun bind(meal: Meal) {
-        name.text = meal.name
-        count.text = meal.count.toString() + "/" + meal.totalCount
-
+        (itemView.findViewById(R.id.lunch_menu_name) as TextView).text = meal.name
+        (itemView.findViewById(R.id.lunch_menu_count) as TextView).text = meal.count.toString() + "/" + meal.totalCount
     }
 
 }
