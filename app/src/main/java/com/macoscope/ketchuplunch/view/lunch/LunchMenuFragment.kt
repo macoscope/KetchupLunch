@@ -43,7 +43,8 @@ class LunchMenuFragment : Fragment() {
         val dayIndex = arguments.getInt(ARG_SECTION_NUMBER)
 
         deferredObservable {
-            val accountRepository = AccountRepository(context, GoogleCredentialWrapper(context), AccountPreferencesFactory(context).getPreferences())
+            val accountRepository = AccountRepository(context, GoogleCredentialWrapper(context),
+                    AccountPreferencesFactory(context).getPreferences())
             val mealService = MealService(ScriptClient(accountRepository.getUserCredentials()))
             Observable.from(mealService.getUserMeals())
         }.toList().subscribeOn(Schedulers.io())
