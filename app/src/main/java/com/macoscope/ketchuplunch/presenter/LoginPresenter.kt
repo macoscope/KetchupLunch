@@ -4,11 +4,11 @@ import android.accounts.AccountManager
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import com.macoscope.ketchuplunch.model.GooglePlayServices
+import com.macoscope.ketchuplunch.model.NetworkAvailability
 import com.macoscope.ketchuplunch.model.login.AccountPreferencesFactory
 import com.macoscope.ketchuplunch.model.login.AccountRepository
 import com.macoscope.ketchuplunch.model.login.GoogleCredentialWrapper
-import com.macoscope.ketchuplunch.model.GooglePlayServices
-import com.macoscope.ketchuplunch.model.NetworkAvailability
 import com.macoscope.ketchuplunch.view.LoginView
 
 class LoginPresenter(val context: Context, val loginView: LoginView) {

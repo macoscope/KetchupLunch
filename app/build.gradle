@@ -13,13 +13,17 @@ android {
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
+        buildConfigField 'String', 'PROJECT_KEY', '"MnY8PSxhZRgMH3xd97Yjja6iUcBrFPiXa"'
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+
         }
     }
+
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
     }
@@ -27,8 +31,9 @@ android {
 
 dependencies {
 
-    compile 'com.android.support:appcompat-v7:23.2.1'
-    compile 'com.android.support:design:23.2.1'
+    compile 'com.android.support:appcompat-v7:23.4.0'
+    compile 'com.android.support:design:23.4.0'
+    compile 'com.android.support:recyclerview-v7:23.4.0'
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     compile 'com.google.android.gms:play-services-identity:8.4.0'
     compile 'pub.devrel:easypermissions:0.1.5'
@@ -38,15 +43,19 @@ dependencies {
     compile('com.google.apis:google-api-services-script:v1-rev1-1.20.0') {
         exclude group: 'org.apache.httpcomponents'
     }
-    testCompile 'org.robospock:robospock:0.8.0'
-    testCompile 'cglib:cglib-nodep:2.2.2'
-    testCompile 'org.objenesis:objenesis:2.3'
     compile 'com.jakewharton.timber:timber:4.1.2'
-
-    testCompile 'junit:junit:4.12'
+    compile 'io.reactivex:rxjava:1.1.5'
+    compile 'io.reactivex:rxandroid:1.2.0'
+    compile 'io.reactivex:rxkotlin:0.55.0'
     compile "org.jetbrains.anko:anko-sdk21:$anko_version"
     compile "org.jetbrains.anko:anko-support-v4:$anko_version"
     compile "org.jetbrains.anko:anko-appcompat-v7:$anko_version"
+    compile "org.jetbrains.anko:anko-recyclerview-v7:$anko_version"
+
+    testCompile 'org.robospock:robospock:0.8.0'
+    testCompile 'cglib:cglib-nodep:2.2.2'
+    testCompile 'org.objenesis:objenesis:2.3'
+
 }
 buildscript {
     ext.kotlin_version = '1.0.1-2'

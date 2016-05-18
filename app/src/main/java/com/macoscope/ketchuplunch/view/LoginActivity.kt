@@ -10,6 +10,7 @@ import com.google.android.gms.common.GoogleApiAvailability
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential
 import com.macoscope.ketchuplunch.R
 import com.macoscope.ketchuplunch.presenter.LoginPresenter
+import com.macoscope.ketchuplunch.view.lunch.LunchActivity
 import org.jetbrains.anko.setContentView
 import org.jetbrains.anko.startActivity
 import pub.devrel.easypermissions.EasyPermissions
@@ -26,7 +27,6 @@ class LoginActivity : AppCompatActivity(), LoginView, EasyPermissions.Permission
         LoginUI().setContentView(this)
         loginPresenter = LoginPresenter(this, this)
         loginPresenter.onCreate()
-
     }
 
     override fun showGooglePlayServicesAvailabilityErrorDialog(connectionStatusCode: Int, requestCode: Int) {

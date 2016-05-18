@@ -10,6 +10,7 @@ import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.services.script.model.ExecutionRequest;
 import com.google.api.services.script.model.Operation;
+import com.macoscope.ketchuplunch.BuildConfig;
 
 import java.io.IOException;
 import java.util.List;
@@ -23,11 +24,10 @@ import timber.log.Timber;
 public class ScriptClient {
 
     private com.google.api.services.script.Script script = null;
-    private String projectKey;
+    private String projectKey = BuildConfig.PROJECT_KEY;
 
 
-    public ScriptClient(GoogleAccountCredential credential, String projectKey) {
-        this.projectKey = projectKey;
+    public ScriptClient(GoogleAccountCredential credential) {
         HttpTransport transport = AndroidHttp.newCompatibleTransport();
         JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
         script = new com.google.api.services.script.Script.Builder(
