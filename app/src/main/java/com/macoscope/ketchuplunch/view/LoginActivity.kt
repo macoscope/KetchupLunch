@@ -14,7 +14,11 @@ import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccoun
 import com.macoscope.ketchuplunch.R
 import com.macoscope.ketchuplunch.presenter.LoginPresenter
 import com.macoscope.ketchuplunch.view.lunch.LunchActivity
-import org.jetbrains.anko.*
+import org.jetbrains.anko.backgroundColor
+import org.jetbrains.anko.dip
+import org.jetbrains.anko.padding
+import org.jetbrains.anko.relativeLayout
+import org.jetbrains.anko.startActivity
 import pub.devrel.easypermissions.EasyPermissions
 
 class LoginActivity : AppCompatActivity(), LoginView, EasyPermissions.PermissionCallbacks {

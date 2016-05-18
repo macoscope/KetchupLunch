@@ -2,9 +2,7 @@ package com.macoscope.ketchuplunch.model.login
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.support.annotation.VisibleForTesting
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential
-import com.google.api.client.util.ExponentialBackOff
 
 class AccountRepository {
 
