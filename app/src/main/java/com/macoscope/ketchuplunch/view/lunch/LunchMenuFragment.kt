@@ -64,20 +64,7 @@ class LunchMenuFragment : Fragment() {
 
 class LunchMenuAdapter(var mealList: List<Meal>) : RecyclerView.Adapter<LaunchMenuItemViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): LaunchMenuItemViewHolder? {
-        //return LaunchMenuItemViewHolder(LunchMenuItemUI().createView(AnkoContext.create(parent!!.context, parent)))
-        val itemView = with(parent!!.context){
-
-            linearLayout {
-                lparams(width = matchParent, height = dip(48))
-                backgroundColor = Color.GRAY
-                orientation = LinearLayout.HORIZONTAL
-
-                textView { id = R.id.lunch_menu_name }
-                textView { id = R.id.lunch_menu_count }
-            }
-
-        }.view()
-        return LaunchMenuItemViewHolder(itemView)
+        return LaunchMenuItemViewHolder(LunchMenuItemUI().createView(AnkoContext.create(parent!!.context, parent)))
     }
 
     override fun onBindViewHolder(holder: LaunchMenuItemViewHolder?, position: Int) {
