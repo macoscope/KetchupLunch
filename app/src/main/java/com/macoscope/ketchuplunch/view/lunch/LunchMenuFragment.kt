@@ -79,12 +79,12 @@ class LunchMenuAdapter(var mealList: List<Meal>) : RecyclerView.Adapter<LaunchMe
 }
 
 class LaunchMenuItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-//    val name: TextView = itemView.find(R.id.lunch_menu_name)
-//    val count: TextView = itemView.find(R.id.lunch_menu_count)
+    val name: TextView = itemView.find(R.id.lunch_menu_name)
+    val count: TextView = itemView.find(R.id.lunch_menu_count)
 
     fun bind(meal: Meal) {
-        (itemView.findViewById(R.id.lunch_menu_name) as TextView).text = meal.name
-        (itemView.findViewById(R.id.lunch_menu_count) as TextView).text = meal.count.toString() + "/" + meal.totalCount
+        name.text = meal.name
+        count.text = meal.count.toString() + "/" + meal.totalCount
     }
 
 }
