@@ -38,19 +38,21 @@ class LunchMenuItemUI : AnkoComponent<ViewGroup> {
                 }
 
                 imageView {
-                    lparams(width =  dip(24), height = dip(24)){
+                    lparams(width = dip(20), height = dip(20)) {
                         gravity = Gravity.CENTER_VERTICAL
-                        marginStart = dip(16)
+                        marginStart = dip(8)
                     }
                     imageResource = R.drawable.ic_lock
                 }
 
                 textView {
-                    lparams {
+                    lparams(width = dip(40)) {
                         gravity = Gravity.CENTER_VERTICAL
+                        marginStart = dip(8)
                     }
                     id = R.id.lunch_menu_count
-                    textSize = 16f
+                    textSize = 18f
+                    gravity = Gravity.CENTER_HORIZONTAL
                 }
             }
         }
