@@ -42,7 +42,7 @@ class LunchMenuItemUI : AnkoComponent<ViewGroup> {
                         gravity = Gravity.CENTER_VERTICAL
                         marginStart = dip(16)
                     }
-                    imageResource = R.drawable.splash_logo
+                    imageResource = R.drawable.ic_lock
                 }
 
                 textView {
