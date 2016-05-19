@@ -8,26 +8,26 @@ import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
 import com.macoscope.ketchuplunch.R
+import org.jetbrains.anko.setContentView
 
 class LunchActivity : AppCompatActivity() {
 
-    private var mSectionsPagerAdapter: DaysPagerAdapter? = null
+    private var sectionsPagerAdapter: DaysPagerAdapter? = null
 
-    private var mViewPager: ViewPager? = null
+    private var viewPager: ViewPager? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_lunch)
-
-        val toolbar = findViewById(R.id.toolbar) as Toolbar?
+//        setContentView(R.layout.activity_lunch)
+        LunchUI().setContentView(this)
+        val toolbar = findViewById(R.id.lunch_toolbar) as Toolbar?
         setSupportActionBar(toolbar)
-        mSectionsPagerAdapter = DaysPagerAdapter(supportFragmentManager)
+        sectionsPagerAdapter = DaysPagerAdapter(supportFragmentManager)
+        viewPager = findViewById(R.id.lunch_pager_container) as ViewPager?
+        viewPager!!.adapter = sectionsPagerAdapter
 
-        mViewPager = findViewById(R.id.container) as ViewPager?
-        mViewPager!!.adapter = mSectionsPagerAdapter
-
-        val tabLayout = findViewById(R.id.tabs) as TabLayout?
-        tabLayout!!.setupWithViewPager(mViewPager)
+        val tabLayout = findViewById(R.id.lunch_tabs) as TabLayout?
+        tabLayout!!.setupWithViewPager(viewPager)
     }
 
 

@@ -29,3 +29,4 @@ class LunchMenuUI(val listAdapter: LunchMenuAdapter) : AnkoComponent<Fragment> {
         }
     }
 }
+
