@@ -16,8 +16,6 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-import timber.log.Timber;
-
 /**
  * Based on https://developers.google.com/apps-script/guides/rest/quickstart/android#step_5_setup_the_sample
  */
@@ -41,45 +39,22 @@ public class ScriptClient {
                 .setDevMode(false);
         Operation operation = script.scripts().run(projectKey, request).execute();
 
-        if (operation.getError() != null) {
-            logScriptError(operation);
-            return null;
-        }
 
         if (operation.getResponse() != null &&
                 operation.getResponse().get("result") != null) {
             return (T) (operation.getResponse().get("result"));
+        } else {
+            throw new IOException(getScriptErrorMessage(operation));
         }
-
-        return null;
     }
 
-    private void logScriptError(Operation op) {
+    private String getScriptErrorMessage(Operation op) {
         if (op.getError() == null) {
-            return;
+            return "";
         }
-
         Map<String, Object> detail = op.getError().getDetails().get(0);
-        List<Map<String, Object>> stacktrace =
-                (List<Map<String, Object>>) detail.get("scriptStackTraceElements");
-
-        StringBuilder stringBuilder =
-                new StringBuilder("\nScript error message: ");
-        stringBuilder.append(detail.get("errorMessage"));
-
-        if (stacktrace != null) {
-            // There may not be a stacktrace if the script didn't start
-            // executing.
-            stringBuilder.append("\nScript error stacktrace:");
-            for (Map<String, Object> elem : stacktrace) {
-                stringBuilder.append("\n  ");
-                stringBuilder.append(elem.get("function"));
-                stringBuilder.append(":");
-                stringBuilder.append(elem.get("lineNumber"));
-            }
-        }
-        stringBuilder.append("\n");
-        Timber.e(stringBuilder.toString());
+        String errorMessage = (String) detail.get("errorMessage");
+        return errorMessage;
     }
 
     private static HttpRequestInitializer setHttpTimeout(
