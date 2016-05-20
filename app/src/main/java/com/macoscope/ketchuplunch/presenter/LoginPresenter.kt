@@ -12,6 +12,7 @@ import com.macoscope.ketchuplunch.model.login.GoogleCredentialWrapper
 import com.macoscope.ketchuplunch.view.LoginView
 import rx.Observable
 import rx.android.schedulers.AndroidSchedulers
+import rx.lang.kotlin.deferredObservable
 import rx.schedulers.Schedulers
 
 class LoginPresenter(val context: Context, val loginView: LoginView) {
@@ -24,18 +25,17 @@ class LoginPresenter(val context: Context, val loginView: LoginView) {
     private val REQUEST_GOOGLE_PLAY_SERVICES = 1002
 
     fun onCreate() {
-
-        Observable.just(isGooglePlayServicesAvailable())
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe {
-                    when {
-                        !it -> acquireGooglePlayServices()
-                        !accountRepository.isAccountNameDefined() -> chooseAccount()
-                        !isDeviceOnline() -> displayNoNetworkMessage()
-                        else -> openMealsScreen()
-                    }
+        deferredObservable {
+            Observable.just(isGooglePlayServicesAvailable()) }.subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe {
+                when {
+                    !it -> acquireGooglePlayServices()
+                    !accountRepository.isAccountNameDefined() -> chooseAccount()
+                    !isDeviceOnline() -> displayNoNetworkMessage()
+                    else -> openMealsScreen()
                 }
+            }
     }
 
 

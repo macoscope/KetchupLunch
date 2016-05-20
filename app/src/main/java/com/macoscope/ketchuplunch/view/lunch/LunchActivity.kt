@@ -18,9 +18,9 @@ class LunchActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        setContentView(R.layout.activity_lunch)
         LunchUI().setContentView(this)
         val toolbar = findViewById(R.id.lunch_toolbar) as Toolbar?
+
         setSupportActionBar(toolbar)
         sectionsPagerAdapter = DaysPagerAdapter(supportFragmentManager)
         viewPager = findViewById(R.id.lunch_pager_container) as ViewPager?
@@ -28,8 +28,8 @@ class LunchActivity : AppCompatActivity() {
 
         val tabLayout = findViewById(R.id.lunch_tabs) as TabLayout?
         tabLayout!!.setupWithViewPager(viewPager)
-    }
 
+    }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_lunch, menu)
