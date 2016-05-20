@@ -9,6 +9,11 @@ import android.view.WindowManager
 import com.google.android.gms.common.GoogleApiAvailability
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential
 import com.macoscope.ketchuplunch.R
+import com.macoscope.ketchuplunch.model.GooglePlayServices
+import com.macoscope.ketchuplunch.model.NetworkAvailability
+import com.macoscope.ketchuplunch.model.login.AccountPreferencesFactory
+import com.macoscope.ketchuplunch.model.login.AccountRepository
+import com.macoscope.ketchuplunch.model.login.GoogleCredentialWrapper
 import com.macoscope.ketchuplunch.presenter.LoginPresenter
 import com.macoscope.ketchuplunch.view.lunch.LunchActivity
 import org.jetbrains.anko.setContentView
@@ -25,7 +30,19 @@ class LoginActivity : AppCompatActivity(), LoginView, EasyPermissions.Permission
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         LoginUI().setContentView(this)
-        loginPresenter = LoginPresenter(this, this)
+        setupPresenter()
+
+    }
+
+    private fun setupPresenter() {
+        val accountRepository: AccountRepository = AccountRepository(this,
+                GoogleCredentialWrapper(this),
+                AccountPreferencesFactory(this).getPreferences())
+
+        loginPresenter = LoginPresenter(this,
+                accountRepository,
+                GooglePlayServices(this),
+                NetworkAvailability(this))
         loginPresenter.onCreate()
     }
 

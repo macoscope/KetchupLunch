@@ -2,24 +2,22 @@ package com.macoscope.ketchuplunch.presenter
 
 import android.accounts.AccountManager
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import com.macoscope.ketchuplunch.model.GooglePlayServices
 import com.macoscope.ketchuplunch.model.NetworkAvailability
-import com.macoscope.ketchuplunch.model.login.AccountPreferencesFactory
 import com.macoscope.ketchuplunch.model.login.AccountRepository
-import com.macoscope.ketchuplunch.model.login.GoogleCredentialWrapper
 import com.macoscope.ketchuplunch.view.LoginView
 import rx.Observable
 import rx.android.schedulers.AndroidSchedulers
 import rx.lang.kotlin.deferredObservable
 import rx.schedulers.Schedulers
 
-class LoginPresenter(val context: Context, val loginView: LoginView) {
+class LoginPresenter(val loginView: LoginView,
+                     val accountRepository: AccountRepository,
+                     val googlePlayServices: GooglePlayServices,
+                     val networkAvailability: NetworkAvailability) {
 
-    private val accountRepository: AccountRepository = AccountRepository(context,
-            GoogleCredentialWrapper(context),
-            AccountPreferencesFactory(context).getPreferences())
+
     private val REQUEST_ACCOUNT_PICKER = 1000
     private val REQUEST_AUTHORIZATION = 1001
     private val REQUEST_GOOGLE_PLAY_SERVICES = 1002
@@ -52,17 +50,17 @@ class LoginPresenter(val context: Context, val loginView: LoginView) {
         loginView.chooseAccount(accountRepository.getUserCredentials(), REQUEST_ACCOUNT_PICKER)
     }
 
-    private fun isGooglePlayServicesAvailable(): Boolean = GooglePlayServices().isAvailable(context)
+    private fun isGooglePlayServicesAvailable(): Boolean = googlePlayServices.isAvailable()
 
 
     private fun acquireGooglePlayServices() {
-        val (isAvailable, connectionStatusCode) = GooglePlayServices().acquireServices(context)
+        val (isAvailable, connectionStatusCode) = googlePlayServices.acquireServices()
         if (!isAvailable) {
             loginView.showGooglePlayServicesAvailabilityErrorDialog(connectionStatusCode, REQUEST_GOOGLE_PLAY_SERVICES)
         }
     }
 
-    private fun isDeviceOnline(): Boolean = NetworkAvailability().isDeviceOnline(context)
+    private fun isDeviceOnline(): Boolean = networkAvailability.isDeviceOnline()
 
 
     fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
