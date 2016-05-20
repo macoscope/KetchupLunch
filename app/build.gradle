@@ -51,7 +51,9 @@ dependencies {
     compile "org.jetbrains.anko:anko-support-v4:$anko_version"
     compile "org.jetbrains.anko:anko-appcompat-v7:$anko_version"
     compile "org.jetbrains.anko:anko-recyclerview-v7:$anko_version"
+    compile "org.jetbrains.anko:anko-design:$anko_version"
     compile 'com.yqritc:recyclerview-flexibledivider:1.2.9'
+
 
     testCompile 'org.robospock:robospock:0.8.0'
     testCompile 'cglib:cglib-nodep:2.2.2'
