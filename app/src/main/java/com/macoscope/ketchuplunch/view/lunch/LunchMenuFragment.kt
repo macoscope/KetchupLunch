@@ -1,91 +1,68 @@
 package com.macoscope.ketchuplunch.view.lunch
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.google.api.client.googleapis.extensions.android.gms.auth.UserRecoverableAuthIOException
 import com.macoscope.ketchuplunch.model.ScriptClient
 import com.macoscope.ketchuplunch.model.login.AccountPreferencesFactory
 import com.macoscope.ketchuplunch.model.login.AccountRepository
 import com.macoscope.ketchuplunch.model.login.GoogleCredentialWrapper
 import com.macoscope.ketchuplunch.model.lunch.Meal
 import com.macoscope.ketchuplunch.model.lunch.MealService
+import com.macoscope.ketchuplunch.presenter.LaunchMenuPresenter
 import org.jetbrains.anko.AnkoContext
 import org.jetbrains.anko.AnkoLogger
-import org.jetbrains.anko.error
 import org.jetbrains.anko.support.v4.ctx
-import rx.Observable
-import rx.android.schedulers.AndroidSchedulers
-import rx.lang.kotlin.deferredObservable
-import rx.lang.kotlin.subscriber
-import rx.schedulers.Schedulers
+import org.jetbrains.anko.support.v4.withArguments
 
-class LunchMenuFragment : Fragment(), AnkoLogger {
-
-    private val REQUEST_AUTHORIZATION = 1001
-    val listAdapter: LunchMenuAdapter = LunchMenuAdapter(emptyList<Meal>())
-    var dayIndex: Int = 0
-
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        dayIndex = arguments.getInt(ARG_SECTION_NUMBER)
-        val rootView = LunchMenuUI(listAdapter).createView(AnkoContext.create(ctx, this))
-        loadData(dayIndex, listAdapter)
-        return rootView
-    }
-
-    private fun loadData(dayIndex: Int, listAdapter: LunchMenuAdapter) {
-        loadDataObservable(dayIndex)
-                .subscribe (
-                        subscriber<List<Meal>>().onNext {
-                            listAdapter.mealList = it
-                            listAdapter.notifyDataSetChanged()
-                        }.onError {
-                            if (it is UserRecoverableAuthIOException) {
-                                startActivityForResult(it.intent, REQUEST_AUTHORIZATION);
-                            }
-                            error("", it)
-                            //TODO show empty view
-                            listAdapter.mealList = emptyList()
-                            listAdapter.notifyDataSetChanged()
-                        }
-                )
-    }
-
-    private fun loadDataObservable(dayIndex: Int): Observable<MutableList<Meal>> {
-        return deferredObservable {
-            val accountRepository = AccountRepository(context, GoogleCredentialWrapper(context),
-                    AccountPreferencesFactory(context).getPreferences())
-            val mealService = MealService(ScriptClient(accountRepository.getUserCredentials()), accountRepository.getAccountName())
-            Observable.from(mealService.getUserMeals(dayIndex))
-        }.toList().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-    }
-
+class LunchMenuFragment : Fragment(), LunchMenuView, AnkoLogger {
     companion object {
 
         private val ARG_SECTION_NUMBER = "section_number"
 
         fun newInstance(sectionNumber: Int): LunchMenuFragment {
-            val fragment = LunchMenuFragment()
-            val args = Bundle()
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber)
-            fragment.arguments = args
-            return fragment
+            return LunchMenuFragment().withArguments(ARG_SECTION_NUMBER to sectionNumber)
         }
+    }
+    val listAdapter: LunchMenuAdapter = LunchMenuAdapter(emptyList<Meal>())
+
+    lateinit var lunchMenuPresenter: LaunchMenuPresenter
+
+    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
+                              savedInstanceState: Bundle?): View? {
+
+        lunchMenuPresenter = LaunchMenuPresenter(createMealService(), this, arguments.getInt(ARG_SECTION_NUMBER))
+        lunchMenuPresenter.createView()
+        val rootView = LunchMenuUI(listAdapter).createView(AnkoContext.create(ctx, this))
+        return rootView
+    }
+
+    private fun createMealService(): MealService {
+        val accountRepository = AccountRepository(context, GoogleCredentialWrapper(context),
+                AccountPreferencesFactory(context).getPreferences())
+        val mealService = MealService(ScriptClient(accountRepository.getUserCredentials()), accountRepository.getAccountName())
+        return mealService
+    }
+
+    override fun showMealList(meals: List<Meal>) {
+        listAdapter.mealList = meals
+        listAdapter.notifyDataSetChanged()
+    }
+
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        lunchMenuPresenter.destroyView()
+
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        when (requestCode) {
-            REQUEST_AUTHORIZATION -> {
-                if (resultCode == Activity.RESULT_OK) {
-                    loadData(dayIndex, listAdapter)
-                }
-            }
-        }
+        lunchMenuPresenter.onActivityResult(requestCode, resultCode)
     }
 }
+
+
