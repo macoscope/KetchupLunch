@@ -4,8 +4,8 @@ import android.Manifest
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
+import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
-import android.view.WindowManager
 import com.google.android.gms.common.GoogleApiAvailability
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential
 import com.macoscope.ketchuplunch.R
@@ -16,7 +16,13 @@ import com.macoscope.ketchuplunch.model.login.AccountRepository
 import com.macoscope.ketchuplunch.model.login.GoogleCredentialWrapper
 import com.macoscope.ketchuplunch.presenter.LoginPresenter
 import com.macoscope.ketchuplunch.view.lunch.LunchActivity
-import org.jetbrains.anko.setContentView
+import org.jetbrains.anko.backgroundColor
+import org.jetbrains.anko.centerHorizontally
+import org.jetbrains.anko.ctx
+import org.jetbrains.anko.dip
+import org.jetbrains.anko.imageView
+import org.jetbrains.anko.padding
+import org.jetbrains.anko.relativeLayout
 import org.jetbrains.anko.startActivity
 import pub.devrel.easypermissions.EasyPermissions
 
@@ -27,11 +33,18 @@ class LoginActivity : AppCompatActivity(), LoginView, EasyPermissions.Permission
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        LoginUI().setContentView(this)
-        setupPresenter()
 
+        relativeLayout {
+            padding = dip(32)
+            id = R.id.login_main_container
+            backgroundColor = ContextCompat.getColor(ctx, R.color.colorRed)
+
+            imageView(R.drawable.ic_logo).lparams {
+                centerHorizontally()
+            }
+        }
+
+        setupPresenter()
     }
 
     private fun setupPresenter() {
