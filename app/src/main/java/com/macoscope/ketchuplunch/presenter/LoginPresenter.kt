@@ -6,7 +6,7 @@ import android.content.Intent
 import com.macoscope.ketchuplunch.model.GooglePlayServices
 import com.macoscope.ketchuplunch.model.NetworkAvailability
 import com.macoscope.ketchuplunch.model.login.AccountRepository
-import com.macoscope.ketchuplunch.view.LoginView
+import com.macoscope.ketchuplunch.view.login.LoginView
 import rx.Observable
 import rx.android.schedulers.AndroidSchedulers
 import rx.lang.kotlin.deferredObservable
