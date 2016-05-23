@@ -2,6 +2,8 @@ package com.macoscope.ketchuplunch.view.lunch
 
 import android.app.Activity
 import android.graphics.Color
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffColorFilter
 import android.support.v4.content.ContextCompat
 import android.view.View
 import com.macoscope.ketchuplunch.R
@@ -27,7 +29,7 @@ class LunchUI : AnkoComponent<Activity> {
                         id = R.id.lunch_toolbar
                         setNavigationIcon(R.drawable.ic_nav)
                         setTitleTextColor(Color.WHITE)
-                        overflowIcon!!.setTint(Color.WHITE)
+                        overflowIcon!!.colorFilter = PorterDuffColorFilter(Color.WHITE, PorterDuff.Mode.MULTIPLY)
                     }
 
                     tabLayout {
