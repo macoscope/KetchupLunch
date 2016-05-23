@@ -28,7 +28,6 @@ class LoginActivity : AppCompatActivity(), LoginView, EasyPermissions.Permission
         super.onCreate(savedInstanceState)
         LoginUI().setContentView(this)
         setupPresenter()
-
     }
 
     private fun setupPresenter() {
