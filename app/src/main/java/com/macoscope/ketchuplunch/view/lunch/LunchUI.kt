@@ -9,40 +9,37 @@ import org.jetbrains.anko.AnkoComponent
 import org.jetbrains.anko.AnkoContext
 import org.jetbrains.anko.appcompat.v7.toolbar
 import org.jetbrains.anko.backgroundColor
+import org.jetbrains.anko.design.appBarLayout
 import org.jetbrains.anko.design.tabLayout
-import org.jetbrains.anko.frameLayout
-import org.jetbrains.anko.matchParent
 import org.jetbrains.anko.support.v4.viewPager
 import org.jetbrains.anko.verticalLayout
-import org.jetbrains.anko.wrapContent
 
 class LunchUI : AnkoComponent<Activity> {
     override fun createView(ui: AnkoContext<Activity>): View {
         return with(ui) {
             verticalLayout {
                 id = R.id.lunch_appbar
-                backgroundColor = ContextCompat.getColor(ctx, android.R.color.white)
-                lparams(width = matchParent, height = wrapContent)
-                frameLayout {
+
+                appBarLayout {
+                    backgroundColor = ContextCompat.getColor(ctx, R.color.colorRed)
+
                     toolbar {
                         id = R.id.lunch_toolbar
-                        backgroundColor = ContextCompat.getColor(ctx, R.color.colorRed)
-                        lparams (width = matchParent, height = wrapContent)
-                        setTitleTextColor(ContextCompat.getColor(ctx, android.R.color.white))
+                        setNavigationIcon(R.drawable.ic_nav)
+                        setTitleTextColor(Color.WHITE)
+                        overflowIcon!!.setTint(Color.WHITE)
                     }
-                }
 
-                tabLayout {
-                    backgroundColor = ContextCompat.getColor(ctx, R.color.colorRed)
-                    lparams(width = matchParent, height = wrapContent)
-                    id = R.id.lunch_tabs
-                    setTabTextColors(Color.LTGRAY, Color.WHITE)
-                    setSelectedTabIndicatorColor(ContextCompat.getColor(ctx, android.R.color.white))
+                    tabLayout {
+                        id = R.id.lunch_tabs
+                        setTabTextColors(Color.LTGRAY, Color.WHITE)
+                        setSelectedTabIndicatorColor(Color.WHITE)
+                    }
                 }
 
                 viewPager {
                     id = R.id.lunch_pager_container
-                    lparams(width = matchParent, height = wrapContent)
+                    backgroundColor = Color.WHITE
                 }
             }
         }
