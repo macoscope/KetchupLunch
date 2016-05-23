@@ -36,8 +36,7 @@ class LunchMenuFragment : Fragment(), LunchMenuView, AnkoLogger {
 
         lunchMenuPresenter = LaunchMenuPresenter(createMealService(), this, arguments.getInt(ARG_SECTION_NUMBER))
         lunchMenuPresenter.createView()
-        val rootView = LunchMenuUI(listAdapter).createView(AnkoContext.create(ctx, this))
-        return rootView
+        return LunchMenuUI(listAdapter).createView(AnkoContext.create(ctx, this))
     }
 
     private fun createMealService(): MealService {

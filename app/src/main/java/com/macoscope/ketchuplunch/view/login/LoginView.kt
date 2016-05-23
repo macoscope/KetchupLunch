@@ -1,4 +1,4 @@
-package com.macoscope.ketchuplunch.view
+package com.macoscope.ketchuplunch.view.login
 
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential
 

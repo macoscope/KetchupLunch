@@ -1,4 +1,4 @@
-package com.macoscope.ketchuplunch.view
+package com.macoscope.ketchuplunch.view.login
 
 import android.Manifest
 import android.content.Intent

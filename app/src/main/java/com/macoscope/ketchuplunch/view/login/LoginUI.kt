@@ -1,4 +1,4 @@
-package com.macoscope.ketchuplunch.view
+package com.macoscope.ketchuplunch.view.login
 
 import android.support.v4.content.ContextCompat
 import com.macoscope.ketchuplunch.R
