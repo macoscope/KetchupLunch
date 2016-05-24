@@ -15,7 +15,6 @@ import com.macoscope.ketchuplunch.model.login.AccountRepository
 import com.macoscope.ketchuplunch.model.login.GoogleCredentialWrapper
 import com.macoscope.ketchuplunch.presenter.LoginPresenter
 import com.macoscope.ketchuplunch.view.lunch.LunchActivity
-import org.jetbrains.anko.setContentView
 import org.jetbrains.anko.startActivity
 import pub.devrel.easypermissions.EasyPermissions
 
@@ -26,7 +25,7 @@ class LoginActivity : AppCompatActivity(), LoginView, EasyPermissions.Permission
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        LoginUI().setContentView(this)
+        setContentView(R.layout.activity_login)
         setupPresenter()
     }
 
