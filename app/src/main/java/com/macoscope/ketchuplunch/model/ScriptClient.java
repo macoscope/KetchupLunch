@@ -13,6 +13,7 @@ import com.google.api.services.script.model.Operation;
 import com.macoscope.ketchuplunch.BuildConfig;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -23,6 +24,7 @@ public class ScriptClient {
 
     private com.google.api.services.script.Script script = null;
     private String projectKey = BuildConfig.PROJECT_KEY;
+    private String environment = BuildConfig.ENV;
 
 
     public ScriptClient(GoogleAccountCredential credential) {
@@ -35,7 +37,9 @@ public class ScriptClient {
     }
 
     public <T> T getDataFromApi(String function, List<Object> parameters) throws IOException, GoogleAuthException {
-        ExecutionRequest request = new ExecutionRequest().setFunction(function).setParameters(parameters)
+        ArrayList<Object> params = new ArrayList<>(parameters);
+        params.add(environment);
+        ExecutionRequest request = new ExecutionRequest().setFunction(function).setParameters(params)
                 .setDevMode(false);
         Operation operation = script.scripts().run(projectKey, request).execute();
 

@@ -14,13 +14,13 @@ android {
         versionCode 1
         versionName "1.0"
         buildConfigField 'String', 'PROJECT_KEY', '"MnY8PSxhZRgMH3xd97Yjja6iUcBrFPiXa"'
+        buildConfigField 'String', 'ENV', '"TEST"'
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-
-
+            buildConfigField 'String', 'ENV', '"PROD"'
         }
     }
 
