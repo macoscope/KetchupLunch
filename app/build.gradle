@@ -13,6 +13,8 @@ android {
         targetSdkVersion 23
         versionCode 2
         versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
         buildConfigField 'String', 'PROJECT_KEY', '"MnY8PSxhZRgMH3xd97Yjja6iUcBrFPiXa"'
         buildConfigField 'String', 'ENV', '"TEST"'
     }
@@ -27,6 +29,12 @@ android {
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
     }
+
+    //Spock
+    packagingOptions {
+        exclude 'META-INF/services/org.codehaus.groovy.transform.ASTTransformation'
+        exclude 'LICENSE.txt'
+    }
 }
 
 dependencies {
@@ -39,9 +47,11 @@ dependencies {
     compile 'pub.devrel:easypermissions:0.1.5'
     compile('com.google.api-client:google-api-client-android:1.20.0') {
         exclude group: 'org.apache.httpcomponents'
+        exclude group: 'com.google.code.findbugs'
     }
     compile('com.google.apis:google-api-services-script:v1-rev1-1.20.0') {
         exclude group: 'org.apache.httpcomponents'
+        exclude group: 'com.google.code.findbugs'
     }
     compile 'com.jakewharton.timber:timber:4.1.2'
     compile 'io.reactivex:rxjava:1.1.5'
@@ -58,6 +68,17 @@ dependencies {
     testCompile 'org.robospock:robospock:0.8.0'
     testCompile 'cglib:cglib-nodep:2.2.2'
     testCompile 'org.objenesis:objenesis:2.3'
+
+
+    androidTestCompile 'org.codehaus.groovy:groovy:2.4.3:grooid'
+    androidTestCompile('org.spockframework:spock-core:1.0-groovy-2.4') {
+        exclude group: 'org.codehaus.groovy'
+        exclude group: 'junit'
+    }
+    androidTestCompile 'com.android.support.test:runner:0.5'
+    androidTestCompile 'com.android.support.test:rules:0.5'
+    androidTestCompile 'com.android.support:support-annotations:23.4.0'
+    androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.2'
 
 }
 buildscript {
