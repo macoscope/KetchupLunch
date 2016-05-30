@@ -62,7 +62,7 @@ dependencies {
 }
 buildscript {
     ext.kotlin_version = '1.0.1-2'
-    ext.anko_version = '0.8.3'
+    ext.anko_version = '0.9-beta1'
     repositories {
         mavenCentral()
     }
