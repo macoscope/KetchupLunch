@@ -1,6 +1,5 @@
 package com.macoscope.ketchuplunch.view.login
 
-import android.Manifest
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
@@ -8,11 +7,9 @@ import android.support.v7.app.AppCompatActivity
 import com.google.android.gms.common.GoogleApiAvailability
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential
 import com.macoscope.ketchuplunch.R
-import com.macoscope.ketchuplunch.model.GooglePlayServices
-import com.macoscope.ketchuplunch.model.NetworkAvailability
-import com.macoscope.ketchuplunch.model.login.AccountPreferencesFactory
-import com.macoscope.ketchuplunch.model.login.AccountRepository
-import com.macoscope.ketchuplunch.model.login.GoogleCredentialWrapper
+import com.macoscope.ketchuplunch.di.AccountModule
+import com.macoscope.ketchuplunch.di.LoginModule
+import com.macoscope.ketchuplunch.model.login.AccountPermission
 import com.macoscope.ketchuplunch.presenter.LoginPresenter
 import com.macoscope.ketchuplunch.view.lunch.LunchActivity
 import org.jetbrains.anko.setContentView
@@ -22,23 +19,14 @@ import pub.devrel.easypermissions.EasyPermissions
 class LoginActivity : AppCompatActivity(), LoginView, EasyPermissions.PermissionCallbacks {
 
     lateinit var loginPresenter: LoginPresenter
-    private val REQUEST_PERMISSION_GET_ACCOUNTS = 103
+    lateinit var accountPermission: AccountPermission
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         LoginUI().setContentView(this)
-        setupPresenter()
-    }
-
-    private fun setupPresenter() {
-        val accountRepository: AccountRepository = AccountRepository(this,
-                GoogleCredentialWrapper(this),
-                AccountPreferencesFactory(this).getPreferences())
-
-        loginPresenter = LoginPresenter(this,
-                accountRepository,
-                GooglePlayServices(this),
-                NetworkAvailability(this))
+        val loginModule = LoginModule(AccountModule(this), this, this)
+        accountPermission = loginModule.provideAccountPermission()
+        loginPresenter = loginModule.provideLoginPresenter()
         loginPresenter.onCreate()
     }
 
@@ -91,18 +79,11 @@ class LoginActivity : AppCompatActivity(), LoginView, EasyPermissions.Permission
     }
 
     override fun chooseAccount(userCredential: GoogleAccountCredential, requestCode: Int) {
-        if (EasyPermissions.hasPermissions(
-                this, Manifest.permission.GET_ACCOUNTS)) {
+        if (accountPermission.hasPermission(this)) {
             loginPresenter.permissionGranted()
             openSelectAccountDialog(userCredential, requestCode)
-
         } else {
-            // Request the GET_ACCOUNTS permission via a user dialog
-            EasyPermissions.requestPermissions(
-                    this,
-                    this.getString(R.string.login_need_contacts_permission),
-                    REQUEST_PERMISSION_GET_ACCOUNTS,
-                    Manifest.permission.GET_ACCOUNTS)
+            accountPermission.requestPermission(this, this)
         }
     }
 
@@ -111,3 +92,5 @@ class LoginActivity : AppCompatActivity(), LoginView, EasyPermissions.Permission
         finish()
     }
 }
+
+
