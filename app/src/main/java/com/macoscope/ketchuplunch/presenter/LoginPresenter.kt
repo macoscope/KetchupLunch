@@ -6,6 +6,7 @@ import android.content.Intent
 import com.macoscope.ketchuplunch.model.GooglePlayServices
 import com.macoscope.ketchuplunch.model.NetworkAvailability
 import com.macoscope.ketchuplunch.model.login.AccountRepository
+import com.macoscope.ketchuplunch.model.login.GoogleCredentialWrapper
 import com.macoscope.ketchuplunch.view.login.LoginView
 import rx.Observable
 import rx.android.schedulers.AndroidSchedulers
@@ -15,7 +16,8 @@ import rx.schedulers.Schedulers
 class LoginPresenter(val loginView: LoginView,
                      val accountRepository: AccountRepository,
                      val googlePlayServices: GooglePlayServices,
-                     val networkAvailability: NetworkAvailability) {
+                     val networkAvailability: NetworkAvailability,
+                     val googleCredentialsWrapper: GoogleCredentialWrapper) {
 
 
     private val REQUEST_ACCOUNT_PICKER = 1000
@@ -24,16 +26,17 @@ class LoginPresenter(val loginView: LoginView,
 
     fun onCreate() {
         deferredObservable {
-            Observable.just(isGooglePlayServicesAvailable()) }.subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe {
-                when {
-                    !it -> acquireGooglePlayServices()
-                    !accountRepository.isAccountNameDefined() -> chooseAccount()
-                    !isDeviceOnline() -> displayNoNetworkMessage()
-                    else -> openMealsScreen()
+            Observable.just(isGooglePlayServicesAvailable())
+        }.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe {
+                    when {
+                        !it -> acquireGooglePlayServices()
+                        !accountRepository.isAccountNameDefined() -> chooseAccount()
+                        !isDeviceOnline() -> displayNoNetworkMessage()
+                        else -> openMealsScreen()
+                    }
                 }
-            }
     }
 
 
@@ -47,7 +50,7 @@ class LoginPresenter(val loginView: LoginView,
 
     private fun chooseAccount() {
 
-        loginView.chooseAccount(accountRepository.getUserCredentials(), REQUEST_ACCOUNT_PICKER)
+        loginView.chooseAccount(googleCredentialsWrapper.userCredential, REQUEST_ACCOUNT_PICKER)
     }
 
     private fun isGooglePlayServicesAvailable(): Boolean = googlePlayServices.isAvailable()
@@ -101,8 +104,6 @@ class LoginPresenter(val loginView: LoginView,
     }
 
     fun permissionGranted() {
-        loginView.openSelectAccountDialog(accountRepository.getUserCredentials(), REQUEST_ACCOUNT_PICKER)
+        loginView.openSelectAccountDialog(googleCredentialsWrapper.userCredential, REQUEST_ACCOUNT_PICKER)
     }
-
-
 }

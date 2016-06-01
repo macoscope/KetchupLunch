@@ -9,14 +9,19 @@ import com.macoscope.ketchuplunch.view.login.LoginView
 
 class LoginModule(val accountModule: AccountModule, val context: Context, val loginView: LoginView) {
 
+    companion object {
+        var accountPermission: AccountPermission? = null
+    }
+
     fun provideAccountPermission(): AccountPermission {
-        return AccountPermission()
+        return accountPermission ?: AccountPermission()
     }
 
     fun provideLoginPresenter(): LoginPresenter {
         return LoginPresenter(loginView,
                 accountModule.provideAccountRepository(),
                 GooglePlayServices(context),
-                NetworkAvailability(context))
+                NetworkAvailability(context),
+                accountModule.provideGoogleCredentialWrapper())
     }
 }
