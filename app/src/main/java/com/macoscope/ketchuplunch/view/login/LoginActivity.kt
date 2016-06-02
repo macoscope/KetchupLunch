@@ -74,8 +74,7 @@ class LoginActivity : AppCompatActivity(), LoginView, EasyPermissions.Permission
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        EasyPermissions.onRequestPermissionsResult(
-                requestCode, permissions, grantResults, this)
+        accountPermission.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
     }
 
     override fun chooseAccount(userCredential: GoogleAccountCredential, requestCode: Int) {

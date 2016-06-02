@@ -8,11 +8,11 @@ open class GoogleCredentialWrapper(val context: Context) {
 
     private val scopes: List<String> = listOf("https://www.googleapis.com/auth/spreadsheets")
 
-    val credential: GoogleAccountCredential = GoogleAccountCredential.usingOAuth2(
+    val userCredential: GoogleAccountCredential = GoogleAccountCredential.usingOAuth2(
             context.applicationContext,
             scopes).setBackOff(ExponentialBackOff());
 
     open fun setSelectedAccountName(accountName: String) {
-        credential.selectedAccountName = accountName
+        userCredential.selectedAccountName = accountName
     }
 }
