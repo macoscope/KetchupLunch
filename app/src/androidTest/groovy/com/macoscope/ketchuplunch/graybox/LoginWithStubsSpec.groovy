@@ -1,4 +1,4 @@
-package com.macoscope.ketchuplunch
+package com.macoscope.ketchuplunch.graybox
 
 import android.accounts.AccountManager
 import android.app.Activity
@@ -6,8 +6,10 @@ import android.app.Instrumentation
 import android.content.Context
 import android.content.Intent
 import android.support.test.espresso.intent.Intents
+import android.support.test.espresso.matcher.ViewMatchers
 import android.support.test.rule.ActivityTestRule
 import android.support.v4.app.ActivityCompat
+import com.macoscope.ketchuplunch.R
 import com.macoscope.ketchuplunch.di.AccountModule
 import com.macoscope.ketchuplunch.di.LoginModule
 import com.macoscope.ketchuplunch.model.login.AccountPermission
@@ -63,7 +65,7 @@ class LoginWithStubsSpec extends Specification {
         when:
             loginActivityRule.launchActivity(new Intent(Intent.ACTION_MAIN))
         then:
-            onView(withId(R.id.lunch_toolbar)).check(matches(isDisplayed()))
+            onView(ViewMatchers.withId(R.id.lunch_toolbar)).check(matches(isDisplayed()))
     }
 
     def "skips login screen when account is stored"() {

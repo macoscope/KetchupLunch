@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.macoscope.ketchuplunch;
+package com.macoscope.ketchuplunch.blackbox;
 
 
 import android.content.Context;
@@ -27,7 +27,7 @@ import android.support.test.uiautomator.UiObject;
 import android.support.test.uiautomator.UiObjectNotFoundException;
 import android.support.test.uiautomator.UiSelector;
 
-import static com.macoscope.ketchuplunch.UiAutomatorUtils.General.clickOnText;
+import static com.macoscope.ketchuplunch.blackbox.UiAutomatorUtils.General.clickOnText;
 
 /**
  * Based on: https://github.com/Egorand/android-testing-runtime-permissions
