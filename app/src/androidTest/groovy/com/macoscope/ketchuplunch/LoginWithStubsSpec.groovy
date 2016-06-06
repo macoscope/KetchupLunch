@@ -27,7 +27,7 @@ import static org.mockito.BDDMockito.given
 import static org.mockito.Matchers.any
 import static org.mockito.Mockito.verify
 
-class LoginSpec extends Specification {
+class LoginWithStubsSpec extends Specification {
 
     @Rule
     ActivityTestRule<LoginActivity> loginActivityRule = new ActivityTestRule(LoginActivity, true, false)
