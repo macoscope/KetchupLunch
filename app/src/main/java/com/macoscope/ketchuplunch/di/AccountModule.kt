@@ -17,14 +17,13 @@ class AccountModule(val context: Context) {
     }
 
     private fun accountRepository(): AccountRepository {
-        val credential = provideGoogleCredentialWrapper()
-        val accountRepository = AccountRepository(context, credential, provideAccountPreferences())
-        credential.setSelectedAccountName(accountRepository.getAccountName())
-        return accountRepository
+        return AccountRepository(context, provideAccountPreferences())
     }
 
     fun provideGoogleCredentialWrapper(): GoogleCredentialWrapper {
-        return GoogleCredentialWrapper(context)
+        val credential = GoogleCredentialWrapper(context)
+        credential.setSelectedAccountName(provideAccountRepository().getAccountName())
+        return credential
     }
 
     fun provideAccountPreferences(): SharedPreferences{
