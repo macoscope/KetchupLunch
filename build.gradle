@@ -15,6 +15,7 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
+        maven { url 'http://repo.kiy0taka.org/' }
     }
 }
 
