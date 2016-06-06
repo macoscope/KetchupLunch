@@ -29,6 +29,11 @@ import android.support.test.uiautomator.UiSelector;
 
 import static com.macoscope.ketchuplunch.UiAutomatorUtils.General.clickOnText;
 
+/**
+ * Based on: https://github.com/Egorand/android-testing-runtime-permissions
+ *
+ * Helper methods for UiAutomator
+ */
 public final class UiAutomatorUtils {
 
     public static final String TEXT_OK = "OK";
@@ -37,6 +42,9 @@ public final class UiAutomatorUtils {
     public static final String TEXT_NEVER_ASK_AGAIN = "Never ask again";
     public static final String TEXT_PERMISSIONS = "Permissions";
 
+    /**
+     * Helper methods for entering system settings UI and changing permissions
+     */
     public static class SystemSettings {
 
         // Permissions Setup
@@ -87,7 +95,9 @@ public final class UiAutomatorUtils {
         }
     }
 
-
+    /**
+     * Interactions with Runtime permission popup
+     */
     public static class RuntimePermissionPopup {
         // Assertions
         public static void assertViewWithTextIsVisible(UiDevice device, String text) {
