@@ -6,7 +6,6 @@ import android.app.Instrumentation
 import android.content.Context
 import android.content.Intent
 import android.support.test.espresso.intent.Intents
-import android.support.test.espresso.matcher.ViewMatchers
 import android.support.test.rule.ActivityTestRule
 import android.support.v4.app.ActivityCompat
 import com.macoscope.ketchuplunch.R
@@ -65,7 +64,7 @@ class LoginWithStubsSpec extends Specification {
         when:
             loginActivityRule.launchActivity(new Intent(Intent.ACTION_MAIN))
         then:
-            onView(ViewMatchers.withId(R.id.lunch_toolbar)).check(matches(isDisplayed()))
+            onView(withId(R.id.lunch_toolbar)).check(matches(isDisplayed()))
     }
 
     def "skips login screen when account is stored"() {
