@@ -8,11 +8,19 @@ import com.macoscope.ketchuplunch.view.lunch.LunchMenuView
 
 class LunchModule(val accountModule: AccountModule, val context: Context, val lunchView: LunchMenuView) {
 
+    companion object {
+        var scriptClient: ScriptClient? = null
+    }
+
     fun provideMealService(): MealService {
-        val googleCredentialWrapper = accountModule.provideGoogleCredentialWrapper()
         val accountRepository = accountModule.provideAccountRepository()
-        val mealService = MealService(ScriptClient(googleCredentialWrapper.userCredential), accountRepository.getAccountName())
+        val mealService = MealService(provideScriptClient(), accountRepository.getAccountName())
         return mealService
+    }
+
+    fun provideScriptClient(): ScriptClient {
+        val googleCredentialWrapper = accountModule.provideGoogleCredentialWrapper()
+        return scriptClient ?: ScriptClient(googleCredentialWrapper.userCredential)
     }
 
     fun provideLunchMenuPresenter(dayIndex: Int): LaunchMenuPresenter {
