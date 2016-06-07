@@ -39,7 +39,6 @@ class LoginPresenter(val loginView: LoginView,
                 }
     }
 
-
     private fun displayNoNetworkMessage() {
         loginView.showNoNetworkMessage()
     }
@@ -49,7 +48,11 @@ class LoginPresenter(val loginView: LoginView,
     }
 
     private fun chooseAccount() {
-        loginView.chooseAccount(googleCredentialsWrapper.userCredential, REQUEST_ACCOUNT_PICKER)
+        if (loginView.hasAccountPermissions()) {
+            permissionGranted()
+        } else {
+            loginView.requestAccountPermissions()
+        }
     }
 
     private fun isGooglePlayServicesAvailable(): Boolean = googlePlayServices.isAvailable()
