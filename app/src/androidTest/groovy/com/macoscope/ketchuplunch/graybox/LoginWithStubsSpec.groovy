@@ -1,4 +1,4 @@
-package com.macoscope.ketchuplunch
+package com.macoscope.ketchuplunch.graybox
 
 import android.accounts.AccountManager
 import android.app.Activity
@@ -8,6 +8,7 @@ import android.content.Intent
 import android.support.test.espresso.intent.Intents
 import android.support.test.rule.ActivityTestRule
 import android.support.v4.app.ActivityCompat
+import com.macoscope.ketchuplunch.R
 import com.macoscope.ketchuplunch.di.AccountModule
 import com.macoscope.ketchuplunch.di.LoginModule
 import com.macoscope.ketchuplunch.model.login.AccountPermission
