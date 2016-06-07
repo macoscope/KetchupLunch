@@ -10,10 +10,12 @@ import org.hamcrest.TypeSafeMatcher;
 
 
 /**
- * Taken from https://github.com/dannyroa/espresso-samples
+ * Taken from https://github.com/dannyroa/espresso-samples and refactored
+ *
  * @author Danny Roa
  */
 public class RecyclerViewMatcher {
+
     private final int recyclerViewId;
 
     public static RecyclerViewMatcher withRecyclerView(final int recyclerViewId) {
@@ -25,53 +27,79 @@ public class RecyclerViewMatcher {
     }
 
     public Matcher<View> atPosition(final int position) {
-        return atPositionOnView(position, -1);
+        return atPositionOnView(position, ItemViewMatcher.ITEM_VIEW_ID);
     }
 
     public Matcher<View> atPositionOnView(final int position, final int targetViewId) {
+        return new ItemViewMatcher(recyclerViewId, position, targetViewId);
+    }
 
-        return new TypeSafeMatcher<View>() {
-            Resources resources = null;
-            View childView;
+    static class ItemViewMatcher extends TypeSafeMatcher<View> {
 
-            public void describeTo(Description description) {
-                String idDescription = Integer.toString(recyclerViewId);
-                if (this.resources != null) {
-                    try {
-                        idDescription = this.resources.getResourceName(recyclerViewId);
-                    } catch (Resources.NotFoundException var4) {
-                        idDescription = String.format("%s (resource name not found)",
-                                                      new Object[] { Integer.valueOf
-                                                          (recyclerViewId) });
-                    }
-                }
+        public static final int ITEM_VIEW_ID = -1;
 
-                description.appendText("with id: " + idDescription);
+        private final int position;
+        private final int targetViewId;
+        private int recyclerViewId;
+        Resources resources;
+        View itemView;
+
+        public ItemViewMatcher(int recyclerViewId, int position, int targetViewId) {
+            this.recyclerViewId = recyclerViewId;
+            this.position = position;
+            this.targetViewId = targetViewId;
+        }
+
+        public void describeTo(Description description) {
+            String idDescription = Integer.toString(recyclerViewId);
+
+            if (resources != null) {
+                idDescription = prepareIdDescription(recyclerViewId);
             }
 
-            public boolean matchesSafely(View view) {
+            description.appendText("with id: " + idDescription);
+        }
 
-                this.resources = view.getResources();
+        public boolean matchesSafely(View view) {
+            resources = view.getResources();
 
-                if (childView == null) {
-                    RecyclerView recyclerView =
-                        (RecyclerView) view.getRootView().findViewById(recyclerViewId);
-                    if (recyclerView != null && recyclerView.getId() == recyclerViewId) {
-                        childView = recyclerView.findViewHolderForAdapterPosition(position).itemView;
-                    }
-                    else {
-                        return false;
-                    }
-                }
-
-                if (targetViewId == -1) {
-                    return view == childView;
-                } else {
-                    View targetView = childView.findViewById(targetViewId);
-                    return view == targetView;
-                }
-
+            if (cacheItemView(view)) {
+                //item
+                return false;
             }
-        };
+
+            if (targetViewId == ITEM_VIEW_ID) {
+                return view == itemView;
+            } else {
+                return view == itemView.findViewById(targetViewId);
+            }
+        }
+
+        private String prepareIdDescription(int id) {
+            String idDescription;
+            try {
+                idDescription = resources.getResourceName(id);
+            } catch (Resources.NotFoundException e) {
+                idDescription = String.format("%s (resource name not found)", id);
+            }
+            return idDescription;
+        }
+
+        private boolean cacheItemView(View view) {
+            if (itemView == null) {
+                RecyclerView recyclerView = findRecyclerViewById(view);
+
+                if (recyclerView == null) {
+                    return true;
+                }
+
+                itemView = recyclerView.findViewHolderForAdapterPosition(position).itemView;
+            }
+            return false;
+        }
+
+        private RecyclerView findRecyclerViewById(View view) {
+            return (RecyclerView) view.getRootView().findViewById(recyclerViewId);
+        }
     }
 }
