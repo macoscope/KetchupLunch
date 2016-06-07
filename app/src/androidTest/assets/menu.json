@@ -1,0 +1,16 @@
+{
+  "name": "meal",
+  "done": true,
+  "response": {
+    "@type": "type.googleapis.com/google.apps.script.v1.ExecutionResponse",
+    "result": [{
+      "name": "Pierogi z buraka",
+      "count": 0,
+      "totalCount": 3
+    }, {
+      "name": "Potato Soup",
+      "count": 2,
+      "totalCount": 4
+    }]
+  }
+}
