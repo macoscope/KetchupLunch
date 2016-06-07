@@ -31,7 +31,7 @@ class LunchMenuMockServerSpec extends Specification {
     def "displays menu for Monday"() {
         given:
             ArrayList<Map<String, Object>> apiResult = new ArrayList<Map<String, Object>>()
-            apiResult.add(["name": "Onion Soup", "count": 1 as BigDecimal, "totalCount": 3 as BigDecimal])
+            apiResult.add(["name": "any meal", "count": 0 as BigDecimal, "totalCount": 0 as BigDecimal])
             apiResult.add(["name": "Potato Soup", "count": 2 as BigDecimal, "totalCount": 4 as BigDecimal])
             given(scriptClientMock.getDataFromApi(isA(String), isA(List))).willReturn(apiResult)
         when:
