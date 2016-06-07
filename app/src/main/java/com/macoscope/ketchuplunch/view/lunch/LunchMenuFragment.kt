@@ -38,13 +38,10 @@ class LunchMenuFragment : Fragment(), LunchMenuView, AnkoLogger {
         return LunchMenuUI(listAdapter).createView(AnkoContext.create(ctx, this))
     }
 
-
-
     override fun showMealList(meals: List<Meal>) {
         listAdapter.mealList = meals
         listAdapter.notifyDataSetChanged()
     }
-
 
     override fun onDestroyView() {
         super.onDestroyView()
