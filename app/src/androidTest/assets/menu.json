@@ -4,9 +4,9 @@
   "response": {
     "@type": "type.googleapis.com/google.apps.script.v1.ExecutionResponse",
     "result": [{
-      "name": "Pierogi z buraka",
+      "name": "any meal",
       "count": 0,
-      "totalCount": 3
+      "totalCount": 0
     }, {
       "name": "Potato Soup",
       "count": 2,
