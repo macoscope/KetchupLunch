@@ -8,6 +8,11 @@ import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
 
+
+/**
+ * Taken from https://github.com/dannyroa/espresso-samples
+ * @author Danny Roa
+ */
 public class RecyclerViewMatcher {
     private final int recyclerViewId;
 
