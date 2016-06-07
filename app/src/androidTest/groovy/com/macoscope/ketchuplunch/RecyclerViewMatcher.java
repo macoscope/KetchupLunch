@@ -37,12 +37,12 @@ public class RecyclerViewMatcher {
     static class ItemViewMatcher extends TypeSafeMatcher<View> {
 
         public static final int ITEM_VIEW_ID = -1;
-
+        private Resources resources;
+        private View itemView;
         private final int position;
         private final int targetViewId;
-        private int recyclerViewId;
-        Resources resources;
-        View itemView;
+        private final int recyclerViewId;
+
 
         public ItemViewMatcher(int recyclerViewId, int position, int targetViewId) {
             this.recyclerViewId = recyclerViewId;
