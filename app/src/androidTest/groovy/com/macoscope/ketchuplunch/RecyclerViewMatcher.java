@@ -89,7 +89,7 @@ public class RecyclerViewMatcher {
             if (itemView == null) {
                 RecyclerView recyclerView = findRecyclerViewById(view);
 
-                if (recyclerView == null || recyclerView.getAdapter().getItemCount() == 0) {
+                if (recyclerView == null || recyclerView.getChildCount() == 0) {
                     return true;
                 }
 
