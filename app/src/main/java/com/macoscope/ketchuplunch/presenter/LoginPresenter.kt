@@ -20,9 +20,9 @@ class LoginPresenter(val loginView: LoginView,
                      val googleCredentialsWrapper: GoogleCredentialWrapper) {
 
 
-    private var REQUEST_ACCOUNT_PICKER = 1000
-    private var REQUEST_AUTHORIZATION = 1001
-    private var REQUEST_GOOGLE_PLAY_SERVICES = 1002
+    private val REQUEST_ACCOUNT_PICKER = 1000
+    private val REQUEST_AUTHORIZATION = 1001
+    private val REQUEST_GOOGLE_PLAY_SERVICES = 1002
 
     fun onCreate() {
         deferredObservable {
@@ -66,6 +66,7 @@ class LoginPresenter(val loginView: LoginView,
     }
 
     private fun isDeviceOnline(): Boolean = networkAvailability.isDeviceOnline()
+
 
     fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         when (requestCode) {
