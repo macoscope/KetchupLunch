@@ -1,11 +1,10 @@
 package com.macoscope.ketchuplunch.model;
 
 import com.google.android.gms.auth.GoogleAuthException;
-import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
 import com.google.api.client.http.HttpRequest;
 import com.google.api.client.http.HttpRequestInitializer;
-import com.google.api.client.http.HttpTransport;
+import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.services.script.model.ExecutionRequest;
@@ -27,12 +26,12 @@ public class ScriptClient {
     private String environment = BuildConfig.ENV;
 
 
-    public ScriptClient(GoogleAccountCredential credential) {
-        HttpTransport transport = AndroidHttp.newCompatibleTransport();
+    public ScriptClient(GoogleAccountCredential credential, String rootUrl) {
         JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
         script = new com.google.api.services.script.Script.Builder(
-                transport, jsonFactory, setHttpTimeout(credential))
-                .setApplicationName("Google Apps Script Execution API Android Quickstart")
+                new NetHttpTransport(), jsonFactory, setHttpTimeout(credential))
+                .setApplicationName("Obiaaad for Android")
+                .setRootUrl(rootUrl)
                 .build();
     }
 

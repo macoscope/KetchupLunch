@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.macoscope.ketchuplunch.di.AccountModule
 import com.macoscope.ketchuplunch.di.LunchModule
+import com.macoscope.ketchuplunch.di.ScriptModule
 import com.macoscope.ketchuplunch.model.lunch.Meal
 import com.macoscope.ketchuplunch.presenter.LaunchMenuPresenter
 import org.jetbrains.anko.AnkoContext
@@ -33,7 +34,8 @@ class LunchMenuFragment : Fragment(), LunchMenuView, AnkoLogger {
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val dayIndex: Int = arguments.getInt(ARG_DAY_INDEX)
-        lunchMenuPresenter = LunchModule(AccountModule(context), context, this).provideLunchMenuPresenter(dayIndex)
+        lunchMenuPresenter = LunchModule(AccountModule(context), ScriptModule(), context, this)
+                .provideLunchMenuPresenter(dayIndex)
         lunchMenuPresenter.createView()
         return LunchMenuUI(listAdapter).createView(AnkoContext.create(ctx, this))
     }
