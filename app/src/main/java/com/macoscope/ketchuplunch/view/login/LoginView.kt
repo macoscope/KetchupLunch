@@ -8,6 +8,7 @@ interface LoginView {
     fun openSelectAccountDialog(googleAccountCredential: GoogleAccountCredential, requestCode: Int)
     fun showNoGooglePlayServices()
     fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray)
-    fun chooseAccount(userCredential: GoogleAccountCredential, requestCode: Int)
+    fun hasAccountPermissions(): Boolean
+    fun requestAccountPermissions()
     fun startLunchActivity()
 }

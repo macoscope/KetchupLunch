@@ -17,7 +17,6 @@ import org.jetbrains.anko.startActivity
 import pub.devrel.easypermissions.EasyPermissions
 
 class LoginActivity : AppCompatActivity(), LoginView, EasyPermissions.PermissionCallbacks {
-
     lateinit var loginPresenter: LoginPresenter
     lateinit var accountPermission: AccountPermission
 
@@ -65,7 +64,6 @@ class LoginActivity : AppCompatActivity(), LoginView, EasyPermissions.Permission
 
     override fun onPermissionsDenied(requestCode: Int, perms: MutableList<String>?) {
         loginPresenter.permissionDenied()
-
     }
 
     override fun onPermissionsGranted(requestCode: Int, perms: MutableList<String>?) {
@@ -77,14 +75,11 @@ class LoginActivity : AppCompatActivity(), LoginView, EasyPermissions.Permission
         accountPermission.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
     }
 
-    override fun chooseAccount(userCredential: GoogleAccountCredential, requestCode: Int) {
-        if (accountPermission.hasPermission(this)) {
-            loginPresenter.permissionGranted()
-            openSelectAccountDialog(userCredential, requestCode)
-        } else {
-            accountPermission.requestPermission(this, this)
-        }
+    override fun requestAccountPermissions() {
+        accountPermission.requestPermission(this, this)
     }
+
+    override fun hasAccountPermissions(): Boolean = accountPermission.hasPermission(this)
 
     override fun startLunchActivity() {
         startActivity<LunchActivity>()
