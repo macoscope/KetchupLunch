@@ -39,7 +39,7 @@ public class ScriptClient {
         ArrayList<Object> params = new ArrayList<>(parameters);
         params.add(environment);
         ExecutionRequest request = new ExecutionRequest().setFunction(function).setParameters(params)
-                .setDevMode(false);
+                .setDevMode(true);
         Operation operation = script.scripts().run(projectKey, request).execute();
 
 

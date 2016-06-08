@@ -17,10 +17,11 @@ import rx.subscriptions.CompositeSubscription
 
 class LaunchMenuPresenter(val mealService: MealService, val lunchMenuView: LunchMenuView, val dayIndex: Int) : AnkoLogger {
     private val REQUEST_AUTHORIZATION = 1001
+    private var currentWeek = 0
     val subscriptions: CompositeSubscription = CompositeSubscription()
 
-    private fun loadData(dayIndex: Int) {
-        subscriptions += loadUserMealsForDayObservable(dayIndex)
+    private fun loadData(weekIndex: Int, dayIndex: Int) {
+        subscriptions += loadUserMealsForDayObservable(weekIndex, dayIndex)
                 .subscribe (
                         subscriber<List<Meal>>().onNext {
                             lunchMenuView.showMealList(it)
@@ -36,25 +37,24 @@ class LaunchMenuPresenter(val mealService: MealService, val lunchMenuView: Lunch
                 )
     }
 
-    private fun loadUserMealsForDayObservable(dayIndex: Int): Observable<MutableList<Meal>> {
+    private fun loadUserMealsForDayObservable(weekIndex:Int, dayIndex: Int): Observable<MutableList<Meal>> {
         return deferredObservable {
-            Observable.from(mealService.getUserMeals(dayIndex))
+            Observable.from(mealService.getUserMeals(weekIndex, dayIndex))
         }.toList().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
     }
 
     fun onActivityResult(requestCode: Int, resultCode: Int) {
-
         when (requestCode) {
             REQUEST_AUTHORIZATION -> {
                 if (resultCode == Activity.RESULT_OK) {
-                    loadData(dayIndex)
+                    loadData(currentWeek, dayIndex)
                 }
             }
         }
     }
 
     fun createView() {
-        loadData(dayIndex)
+        loadData(currentWeek, dayIndex)
     }
 
     fun destroyView() {

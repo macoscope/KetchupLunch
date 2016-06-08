@@ -6,9 +6,9 @@ import java.math.BigDecimal
 class MealService(val scriptClient: ScriptClient, val userName: String) {
 
 
-    fun getUserMeals(dayIndex: Int): List<Meal> {
+    fun getUserMeals(weekIndex: Int, dayIndex: Int): List<Meal> {
 
-        val parameters: List<Any> = listOf(userName.split("@").first(), dayIndex)
+        val parameters: List<Any> = listOf(userName.split("@").first(), weekIndex, dayIndex)
         val mealRawList = scriptClient.getDataFromApi<List<Map<String, Any>>>("meal", parameters)
 
         val meals = mealRawList
