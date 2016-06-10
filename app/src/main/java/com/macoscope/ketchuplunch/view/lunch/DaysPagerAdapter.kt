@@ -4,10 +4,10 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
 
-class DaysPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
+class DaysPagerAdapter(fm: FragmentManager, val weekIndex: Int) : FragmentPagerAdapter(fm) {
 
     override fun getItem(position: Int): Fragment {
-        return LunchMenuFragment.newInstance(position)
+        return LunchMenuFragment.newInstance(weekIndex, position)
     }
 
     override fun getCount(): Int {

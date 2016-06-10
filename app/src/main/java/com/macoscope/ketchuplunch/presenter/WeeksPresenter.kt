@@ -4,7 +4,10 @@ import android.app.Activity
 import com.google.api.client.googleapis.extensions.android.gms.auth.UserRecoverableAuthIOException
 import com.macoscope.ketchuplunch.model.lunch.Meal
 import com.macoscope.ketchuplunch.model.lunch.MealService
+import com.macoscope.ketchuplunch.model.lunch.Week
+import com.macoscope.ketchuplunch.model.lunch.WeeksService
 import com.macoscope.ketchuplunch.view.lunch.LunchMenuView
+import com.macoscope.ketchuplunch.view.lunch.WeeksView
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.error
 import rx.Observable
@@ -15,31 +18,22 @@ import rx.lang.kotlin.subscriber
 import rx.schedulers.Schedulers
 import rx.subscriptions.CompositeSubscription
 
-class LaunchMenuPresenter(val mealService: MealService, val lunchMenuView: LunchMenuView, val weekIndex: Int,
-                          val dayIndex: Int) : AnkoLogger {
-    private val REQUEST_AUTHORIZATION = 1001
+class WeeksPresenter(val weeksService: WeeksService, val weeksView: WeeksView) : AnkoLogger {
     val subscriptions: CompositeSubscription = CompositeSubscription()
-
-    private fun loadData(weekIndex: Int, dayIndex: Int) {
-        subscriptions += loadUserMealsForDayObservable(weekIndex, dayIndex)
-                .subscribe (
-                        subscriber<List<Meal>>().onNext {
-                            lunchMenuView.showMealList(it)
-
-                        }.onError {
+    private val REQUEST_AUTHORIZATION = 1001
+    private fun loadData() {
+        subscriptions += loadWeeksObservable().subscribe(
+                subscriber<List<Week>>()
+                        .onNext { weeksView.showWeeks(it) }
+                        .onError {
                             error("", it)
-                            if (it is UserRecoverableAuthIOException) {
-                                lunchMenuView.startActivityForResult(it.intent, REQUEST_AUTHORIZATION);
-                            }
-                            //TODO show empty view
-                            lunchMenuView.showMealList(emptyList())
                         }
-                )
+        )
     }
 
-    private fun loadUserMealsForDayObservable(weekIndex: Int, dayIndex: Int): Observable<MutableList<Meal>> {
+    private fun loadWeeksObservable(): Observable<List<Week>> {
         return deferredObservable {
-            Observable.from(mealService.getUserMeals(weekIndex, dayIndex))
+            Observable.from(weeksService.getWeeks())
         }.toList().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
     }
 
@@ -47,14 +41,14 @@ class LaunchMenuPresenter(val mealService: MealService, val lunchMenuView: Lunch
         when (requestCode) {
             REQUEST_AUTHORIZATION -> {
                 if (resultCode == Activity.RESULT_OK) {
-                    loadData(weekIndex, dayIndex)
+                    loadData()
                 }
             }
         }
     }
 
     fun createView() {
-        loadData(weekIndex, dayIndex)
+        loadData()
     }
 
     fun destroyView() {

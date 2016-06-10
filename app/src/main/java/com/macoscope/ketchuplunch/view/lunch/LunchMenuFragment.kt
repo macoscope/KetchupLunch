@@ -21,9 +21,12 @@ class LunchMenuFragment : Fragment(), LunchMenuView, AnkoLogger {
     companion object {
 
         private val ARG_DAY_INDEX = "day_index"
+        private val ARG_WEEK_INDEX = "week_index"
 
-        fun newInstance(sectionNumber: Int): LunchMenuFragment {
-            return LunchMenuFragment().withArguments(ARG_DAY_INDEX to sectionNumber)
+        fun newInstance(weekIndex: Int, sectionNumber: Int): LunchMenuFragment {
+            return LunchMenuFragment()
+                    .withArguments(ARG_DAY_INDEX to sectionNumber)
+                    .withArguments(ARG_WEEK_INDEX to weekIndex)
         }
     }
 
@@ -34,8 +37,9 @@ class LunchMenuFragment : Fragment(), LunchMenuView, AnkoLogger {
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val dayIndex: Int = arguments.getInt(ARG_DAY_INDEX)
+        val weekIndex: Int = arguments.getInt(ARG_WEEK_INDEX)
         lunchMenuPresenter = LunchModule(AccountModule(context), ScriptModule(), context, this)
-                .provideLunchMenuPresenter(dayIndex)
+                .provideLunchMenuPresenter(weekIndex, dayIndex)
         lunchMenuPresenter.createView()
         return LunchMenuUI(listAdapter).createView(AnkoContext.create(ctx, this))
     }
