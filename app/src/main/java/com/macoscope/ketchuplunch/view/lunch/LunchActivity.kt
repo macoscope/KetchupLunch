@@ -77,11 +77,6 @@ class LunchActivity : AppCompatActivity(), WeeksView {
         return true
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val id = item.itemId
-        return super.onOptionsItemSelected(item)
-    }
-
     override fun showWeeks(weeks: List<Week>) {
         weeksAdapter!!.weeksList = weeks
     }
