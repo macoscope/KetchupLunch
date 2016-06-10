@@ -19,4 +19,5 @@ class LunchMenuAdapter(var mealList: List<Meal>) : RecyclerView.Adapter<LaunchMe
         return mealList.size
     }
 
+
 }

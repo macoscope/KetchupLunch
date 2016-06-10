@@ -6,8 +6,15 @@ import android.support.v4.app.FragmentPagerAdapter
 
 class DaysPagerAdapter(fm: FragmentManager, val weekIndex: Int) : FragmentPagerAdapter(fm) {
 
+    companion  object {
+        val UNDEFINED_WEEK_INDEX: Int = -1
+    }
+
     override fun getItem(position: Int): Fragment {
-        return LunchMenuFragment.newInstance(weekIndex, position)
+        return when (weekIndex) {
+            UNDEFINED_WEEK_INDEX -> LunchMenuEmptyFragment.newInstance()
+            else -> LunchMenuFragment.newInstance(weekIndex, position)
+        }
     }
 
     override fun getCount(): Int {

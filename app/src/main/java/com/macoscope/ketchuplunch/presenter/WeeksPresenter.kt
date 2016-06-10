@@ -1,12 +1,8 @@
 package com.macoscope.ketchuplunch.presenter
 
 import android.app.Activity
-import com.google.api.client.googleapis.extensions.android.gms.auth.UserRecoverableAuthIOException
-import com.macoscope.ketchuplunch.model.lunch.Meal
-import com.macoscope.ketchuplunch.model.lunch.MealService
 import com.macoscope.ketchuplunch.model.lunch.Week
 import com.macoscope.ketchuplunch.model.lunch.WeeksService
-import com.macoscope.ketchuplunch.view.lunch.LunchMenuView
 import com.macoscope.ketchuplunch.view.lunch.WeeksView
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.error
@@ -22,11 +18,16 @@ class WeeksPresenter(val weeksService: WeeksService, val weeksView: WeeksView) :
     val subscriptions: CompositeSubscription = CompositeSubscription()
     private val REQUEST_AUTHORIZATION = 1001
     private fun loadData() {
+        weeksView.showLoading()
         subscriptions += loadWeeksObservable().subscribe(
                 subscriber<List<Week>>()
-                        .onNext { weeksView.showWeeks(it) }
+                        .onNext {
+                            weeksView.showWeeks(it)
+                            weeksView.hideLoading()
+                        }
                         .onError {
                             error("", it)
+                            weeksView.hideLoading()
                         }
         )
     }

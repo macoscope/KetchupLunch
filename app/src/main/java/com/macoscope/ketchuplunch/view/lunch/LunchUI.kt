@@ -42,7 +42,6 @@ class LunchUI : AnkoComponent<Activity> {
                 viewPager {
                     id = R.id.lunch_pager_container
                     backgroundColor = Color.WHITE
-                    visibility = View.GONE
                 }
             }
         }
