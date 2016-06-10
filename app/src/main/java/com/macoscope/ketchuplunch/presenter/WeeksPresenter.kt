@@ -1,6 +1,7 @@
 package com.macoscope.ketchuplunch.presenter
 
 import android.app.Activity
+import com.google.api.client.googleapis.extensions.android.gms.auth.UserRecoverableAuthIOException
 import com.macoscope.ketchuplunch.model.lunch.Week
 import com.macoscope.ketchuplunch.model.lunch.WeeksService
 import com.macoscope.ketchuplunch.view.lunch.WeeksView
@@ -27,6 +28,9 @@ class WeeksPresenter(val weeksService: WeeksService, val weeksView: WeeksView) :
                         }
                         .onError {
                             error("", it)
+                            if (it is UserRecoverableAuthIOException) {
+                                weeksView.startActivityForResult(it.intent, REQUEST_AUTHORIZATION);
+                            }
                             weeksView.hideLoading()
                         }
         )

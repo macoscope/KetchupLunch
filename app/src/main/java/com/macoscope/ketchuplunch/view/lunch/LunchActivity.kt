@@ -1,6 +1,7 @@
 package com.macoscope.ketchuplunch.view.lunch
 
 import android.app.ProgressDialog
+import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.TabLayout
 import android.support.v4.view.ViewPager
@@ -91,4 +92,10 @@ class LunchActivity : AppCompatActivity(), WeeksView, AdapterView.OnItemSelected
     override fun showWeeks(weeks: List<Week>) {
         weeksAdapter!!.weeksList = weeks
     }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        weeksPresenter.onActivityResult(requestCode, resultCode)
+    }
+
 }

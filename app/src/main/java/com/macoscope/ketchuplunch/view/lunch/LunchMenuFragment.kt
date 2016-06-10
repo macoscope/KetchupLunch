@@ -18,7 +18,6 @@ import org.jetbrains.anko.support.v4.ctx
 class LunchMenuFragment : Fragment(), LunchMenuView, AnkoLogger {
 
     companion object {
-
         private val ARG_DAY_INDEX = "day_index"
         private val ARG_WEEK_INDEX = "week_index"
 

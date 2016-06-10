@@ -1,5 +1,6 @@
 package com.macoscope.ketchuplunch.view.lunch
 
+import android.content.Intent
 import com.macoscope.ketchuplunch.model.lunch.Week
 
 interface WeeksView {
@@ -7,4 +8,5 @@ interface WeeksView {
     fun selectActiveWeek(index: Long)
     fun showLoading()
     fun hideLoading()
+    fun startActivityForResult(intent: Intent, requestCode: Int);
 }
