@@ -25,7 +25,6 @@ public class ScriptClient {
     private String projectKey = BuildConfig.PROJECT_KEY;
     private String environment = BuildConfig.ENV;
 
-
     public ScriptClient(GoogleAccountCredential credential, String rootUrl) {
         JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
         script = new com.google.api.services.script.Script.Builder(
@@ -39,9 +38,8 @@ public class ScriptClient {
         ArrayList<Object> params = new ArrayList<>(parameters);
         params.add(environment);
         ExecutionRequest request = new ExecutionRequest().setFunction(function).setParameters(params)
-                .setDevMode(true);
+                .setDevMode(false);
         Operation operation = script.scripts().run(projectKey, request).execute();
-
 
         if (operation.getResponse() != null &&
                 operation.getResponse().get("result") != null) {

@@ -14,7 +14,6 @@ import com.macoscope.ketchuplunch.presenter.LaunchMenuPresenter
 import org.jetbrains.anko.AnkoContext
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.support.v4.ctx
-import org.jetbrains.anko.support.v4.withArguments
 
 class LunchMenuFragment : Fragment(), LunchMenuView, AnkoLogger {
 
@@ -23,10 +22,13 @@ class LunchMenuFragment : Fragment(), LunchMenuView, AnkoLogger {
         private val ARG_DAY_INDEX = "day_index"
         private val ARG_WEEK_INDEX = "week_index"
 
-        fun newInstance(weekIndex: Int, sectionNumber: Int): LunchMenuFragment {
-            return LunchMenuFragment()
-                    .withArguments(ARG_DAY_INDEX to sectionNumber)
-                    .withArguments(ARG_WEEK_INDEX to weekIndex)
+        fun newInstance(weekIndex: Long, sectionNumber: Int): LunchMenuFragment {
+            val arguments: Bundle = Bundle()
+            arguments.putLong(ARG_WEEK_INDEX, weekIndex)
+            arguments.putInt(ARG_DAY_INDEX, sectionNumber)
+            val fragment: LunchMenuFragment = LunchMenuFragment()
+            fragment.arguments = arguments
+            return fragment
         }
     }
 
@@ -37,7 +39,7 @@ class LunchMenuFragment : Fragment(), LunchMenuView, AnkoLogger {
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val dayIndex: Int = arguments.getInt(ARG_DAY_INDEX)
-        val weekIndex: Int = arguments.getInt(ARG_WEEK_INDEX)
+        val weekIndex: Long = arguments.getLong(ARG_WEEK_INDEX)
         lunchMenuPresenter = LunchModule(AccountModule(context), ScriptModule(), context, this)
                 .provideLunchMenuPresenter(weekIndex, dayIndex)
         lunchMenuPresenter.createView()

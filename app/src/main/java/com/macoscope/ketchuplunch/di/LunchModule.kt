@@ -23,7 +23,7 @@ class LunchModule(val accountModule: AccountModule, val scriptModule: ScriptModu
         return scriptClient ?: ScriptClient(googleCredentialWrapper.userCredential, scriptModule.provideRootUrl())
     }
 
-    fun provideLunchMenuPresenter(weekIndex: Int, dayIndex: Int): LaunchMenuPresenter {
+    fun provideLunchMenuPresenter(weekIndex: Long, dayIndex: Int): LaunchMenuPresenter {
         return LaunchMenuPresenter(provideMealService(), lunchView, weekIndex, dayIndex)
     }
 }

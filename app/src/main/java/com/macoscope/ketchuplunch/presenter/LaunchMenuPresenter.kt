@@ -15,17 +15,16 @@ import rx.lang.kotlin.subscriber
 import rx.schedulers.Schedulers
 import rx.subscriptions.CompositeSubscription
 
-class LaunchMenuPresenter(val mealService: MealService, val lunchMenuView: LunchMenuView, val weekIndex: Int,
+class LaunchMenuPresenter(val mealService: MealService, val lunchMenuView: LunchMenuView, val weekIndex: Long,
                           val dayIndex: Int) : AnkoLogger {
     private val REQUEST_AUTHORIZATION = 1001
     val subscriptions: CompositeSubscription = CompositeSubscription()
 
-    private fun loadData(weekIndex: Int, dayIndex: Int) {
+    private fun loadData(weekIndex: Long, dayIndex: Int) {
         subscriptions += loadUserMealsForDayObservable(weekIndex, dayIndex)
                 .subscribe (
                         subscriber<List<Meal>>().onNext {
                             lunchMenuView.showMealList(it)
-
                         }.onError {
                             error("", it)
                             if (it is UserRecoverableAuthIOException) {
@@ -37,7 +36,7 @@ class LaunchMenuPresenter(val mealService: MealService, val lunchMenuView: Lunch
                 )
     }
 
-    private fun loadUserMealsForDayObservable(weekIndex: Int, dayIndex: Int): Observable<MutableList<Meal>> {
+    private fun loadUserMealsForDayObservable(weekIndex: Long, dayIndex: Int): Observable<MutableList<Meal>> {
         return deferredObservable {
             Observable.from(mealService.getUserMeals(weekIndex, dayIndex))
         }.toList().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())

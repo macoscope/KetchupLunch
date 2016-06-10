@@ -4,7 +4,7 @@ import com.macoscope.ketchuplunch.model.lunch.Week
 
 interface WeeksView {
     fun showWeeks(weeks: List<Week>)
-    fun selectActiveWeek(index: Int)
+    fun selectActiveWeek(index: Long)
     fun showLoading()
     fun hideLoading()
 }

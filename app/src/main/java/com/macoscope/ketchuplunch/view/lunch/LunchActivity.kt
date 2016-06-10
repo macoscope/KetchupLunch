@@ -6,10 +6,9 @@ import android.support.design.widget.TabLayout
 import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
-import android.util.Log
 import android.view.Menu
-import android.view.MenuItem
 import android.view.View
+import android.widget.AdapterView
 import android.widget.Spinner
 import com.macoscope.ketchuplunch.R
 import com.macoscope.ketchuplunch.di.AccountModule
@@ -20,11 +19,9 @@ import com.macoscope.ketchuplunch.presenter.WeeksPresenter
 import org.jetbrains.anko.indeterminateProgressDialog
 import org.jetbrains.anko.setContentView
 
-class LunchActivity : AppCompatActivity(), WeeksView {
-    private var sectionsPagerAdapter: DaysPagerAdapter? = null
+class LunchActivity : AppCompatActivity(), WeeksView, AdapterView.OnItemSelectedListener {
     private var viewPager: ViewPager? = null
     private var progressDialog: ProgressDialog? = null
-    private var weeksSpinner: Spinner? = null
     private var weeksAdapter: WeeksAdapter? = null
     lateinit var weeksPresenter: WeeksPresenter
 
@@ -33,7 +30,7 @@ class LunchActivity : AppCompatActivity(), WeeksView {
         LunchUI().setContentView(this)
         setSupportActionBar(findViewById(R.id.lunch_toolbar) as Toolbar?)
         viewPager = findViewById(R.id.lunch_pager_container) as ViewPager?
-        selectActiveWeek(DaysPagerAdapter.UNDEFINED_WEEK_INDEX)
+        viewPager!!.adapter = DaysPagerAdapter(supportFragmentManager, DaysPagerAdapter.UNDEFINED_WEEK_INDEX)
         setupTabs(viewPager)
         setupPresenter()
     }
@@ -51,6 +48,7 @@ class LunchActivity : AppCompatActivity(), WeeksView {
     override fun onDestroy() {
         super.onDestroy()
         weeksPresenter.destroyView()
+        progressDialog?.dismiss()
     }
 
     override fun showLoading() {
@@ -61,20 +59,33 @@ class LunchActivity : AppCompatActivity(), WeeksView {
 
     override fun hideLoading() {
         viewPager!!.visibility = View.VISIBLE
-        progressDialog!!.hide()
+        progressDialog!!.dismiss()
     }
 
-    override fun selectActiveWeek(index: Int) {
-        sectionsPagerAdapter = DaysPagerAdapter(supportFragmentManager, index)
-        viewPager!!.adapter = sectionsPagerAdapter
+    override fun selectActiveWeek(index: Long) {
+        viewPager!!.adapter = DaysPagerAdapter(supportFragmentManager, index)
+        viewPager!!.invalidate()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_lunch, menu)
-        weeksSpinner = menu.findItem(R.id.weeks_spinner).actionView as Spinner
-        weeksAdapter = WeeksAdapter()
-        (weeksSpinner as Spinner).adapter = weeksAdapter
+        setupWeeksSpinner(menu.findItem(R.id.weeks_spinner).actionView as Spinner)
         return true
+    }
+
+    private fun setupWeeksSpinner(weeksSpinner: Spinner) {
+        weeksAdapter = WeeksAdapter()
+        weeksSpinner.adapter = weeksAdapter
+        weeksSpinner.onItemSelectedListener = this
+    }
+
+    override fun onNothingSelected(parent: AdapterView<*>?) {
+        throw UnsupportedOperationException()
+    }
+
+    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+
+        selectActiveWeek(weeksAdapter!!.getItem(position).index)
     }
 
     override fun showWeeks(weeks: List<Week>) {
