@@ -14,8 +14,6 @@ import spock.lang.Specification
 import static android.support.test.espresso.Espresso.onView
 import static android.support.test.espresso.matcher.ViewMatchers.withText
 import static com.macoscope.ketchuplunch.RecyclerViewMatcher.withRecyclerView
-import static org.mockito.BDDMockito.given
-import static org.mockito.Matchers.isA
 
 class LunchMenuWithStubsSpec extends Specification {
 
@@ -28,12 +26,10 @@ class LunchMenuWithStubsSpec extends Specification {
         LunchModule.scriptClient = scriptClientMock
     }
 
+    //TODO Exercise 6
     def "displays menu for Monday"() {
         given:
-            ArrayList<Map<String, Object>> apiResult = new ArrayList<Map<String, Object>>()
-            apiResult.add(["name": "any meal", "count": 0 as BigDecimal, "totalCount": 0 as BigDecimal])
-            apiResult.add(["name": "Potato Soup", "count": 2 as BigDecimal, "totalCount": 4 as BigDecimal])
-            given(scriptClientMock.getDataFromApi(isA(String), isA(List))).willReturn(apiResult)
+            //TODO Return stubbed list of meals using Mockito
         when:
             loginActivityRule.launchActivity(new Intent(Intent.ACTION_MAIN))
         then:

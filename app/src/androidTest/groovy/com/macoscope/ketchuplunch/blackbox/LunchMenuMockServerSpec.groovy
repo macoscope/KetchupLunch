@@ -29,13 +29,13 @@ class LunchMenuMockServerSpec extends Specification {
         ScriptModule.rootUrl = RESTMockServer.getUrl()
     }
 
+    //TODO Exercise 2 & 3
     def "displays menu for Monday"() {
         given:
-            RESTMockServer.whenPOST(pathContains("")).thenReturnFile(200, "menu.json");
+            //TODO setup stub here
         when:
             loginActivityRule.launchActivity(new Intent(Intent.ACTION_MAIN))
         then:
-            onView(withRecyclerView(R.id.lunch_menu_list).atPositionOnView(1, R.id.lunch_menu_name)).check(ViewAssertions.matches(withText("Potato Soup")))
-            onView(withRecyclerView(R.id.lunch_menu_list).atPositionOnView(1, R.id.lunch_menu_count)).check(ViewAssertions.matches(withText("2/4")))
+            //TODO assert view data
     }
 }
