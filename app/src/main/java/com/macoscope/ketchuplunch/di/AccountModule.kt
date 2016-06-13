@@ -6,7 +6,7 @@ import com.macoscope.ketchuplunch.model.login.AccountPreferencesFactory
 import com.macoscope.ketchuplunch.model.login.AccountRepository
 import com.macoscope.ketchuplunch.model.login.GoogleCredentialWrapper
 
-class AccountModule(val context: Context) {
+open class AccountModule(val context: Context) {
 
     companion object {
         var accountRepository: AccountRepository? = null

@@ -8,5 +8,6 @@ interface WeeksView {
     fun selectAdapterForActiveWeek(weekIndex: Long)
     fun showLoading()
     fun hideLoading()
-    fun startActivityForResult(intent: Intent, requestCode: Int);
+    fun startActivityForResult(intent: Intent, requestCode: Int)
+    fun startLoginActivity()
 }

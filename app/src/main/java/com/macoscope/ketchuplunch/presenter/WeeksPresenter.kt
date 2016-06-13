@@ -2,6 +2,7 @@ package com.macoscope.ketchuplunch.presenter
 
 import android.app.Activity
 import com.google.api.client.googleapis.extensions.android.gms.auth.UserRecoverableAuthIOException
+import com.macoscope.ketchuplunch.LogOutUseCase
 import com.macoscope.ketchuplunch.model.lunch.Week
 import com.macoscope.ketchuplunch.model.lunch.WeeksService
 import com.macoscope.ketchuplunch.view.lunch.WeeksView
@@ -15,7 +16,7 @@ import rx.lang.kotlin.subscriber
 import rx.schedulers.Schedulers
 import rx.subscriptions.CompositeSubscription
 
-class WeeksPresenter(val weeksService: WeeksService, val weeksView: WeeksView) : AnkoLogger {
+class WeeksPresenter(val weeksService: WeeksService, val weeksView: WeeksView, val logOutUseCase: LogOutUseCase) : AnkoLogger {
     val subscriptions: CompositeSubscription = CompositeSubscription()
     private val REQUEST_AUTHORIZATION = 1001
     private fun loadData() {
@@ -62,5 +63,10 @@ class WeeksPresenter(val weeksService: WeeksService, val weeksView: WeeksView) :
 
     fun destroyView() {
         subscriptions.clear()
+    }
+
+    fun logOut(){
+        logOutUseCase.logOut()
+        weeksView.startLoginActivity()
     }
 }

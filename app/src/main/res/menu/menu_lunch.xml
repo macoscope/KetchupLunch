@@ -7,4 +7,8 @@
         android:title="@string/lunch_weeks"
         app:actionViewClass="android.widget.Spinner"
         app:showAsAction="always" />
+
+    <item android:id="@+id/log_out"
+          android:title="@string/log_out"
+          app:showAsAction="never"/>
 </menu>
