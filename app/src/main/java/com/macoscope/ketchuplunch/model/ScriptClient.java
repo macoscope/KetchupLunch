@@ -36,7 +36,7 @@ public class ScriptClient {
 
     public <T> T getDataFromApi(String function, List<Object> parameters) throws IOException, GoogleAuthException {
         ArrayList<Object> params = new ArrayList<>(parameters);
-        params.add(environment);
+        params.add(getEnvIndex(parameters), environment);
         ExecutionRequest request = new ExecutionRequest().setFunction(function).setParameters(params)
                 .setDevMode(false);
         Operation operation = script.scripts().run(projectKey, request).execute();
@@ -46,6 +46,14 @@ public class ScriptClient {
             return (T) (operation.getResponse().get("result"));
         } else {
             throw new IOException(getScriptErrorMessage(operation));
+        }
+    }
+
+    private int getEnvIndex(List<Object> parameters) {
+        if (parameters.size() >= 3) {
+            return 2;
+        } else {
+            return 0;
         }
     }
 

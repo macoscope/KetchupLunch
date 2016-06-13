@@ -8,7 +8,7 @@ class MealService(val scriptClient: ScriptClient, val userName: String) {
 
     fun getUserMeals(weekIndex: Long, dayIndex: Int): List<Meal> {
 
-        val parameters: List<Any> = listOf(userName.split("@").first(), weekIndex, dayIndex)
+        val parameters: List<Any> = listOf(userName.split("@").first(), dayIndex, weekIndex)
         val mealRawList = scriptClient.getDataFromApi<List<Map<String, Any>>>("meal", parameters)
 
         val meals = mealRawList
