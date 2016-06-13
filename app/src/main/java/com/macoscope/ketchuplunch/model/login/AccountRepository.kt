@@ -28,4 +28,8 @@ open class AccountRepository {
         editor.putString(accountNamePrefKey, accountName)
         editor.apply()
     }
+
+    open fun clearAccount() {
+        sharedPreferences.edit().remove(accountNamePrefKey).apply()
+    }
 }
