@@ -9,4 +9,5 @@
     <item name="lunch_pager_container" type="id" />
     <item name="login_main_container" type="id" />
     <item name="week_name" type="id" />
+    <item name="week_toolbar_name" type="id" />
 </resources>
