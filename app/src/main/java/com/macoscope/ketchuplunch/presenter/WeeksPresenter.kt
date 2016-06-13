@@ -23,8 +23,7 @@ class WeeksPresenter(val weeksService: WeeksService, val weeksView: WeeksView) :
         subscriptions += loadWeeksObservable().subscribe(
                 subscriber<List<Week>>()
                         .onNext {
-                            weeksView.showWeeks(it)
-                            weeksView.hideLoading()
+                            showWeeks(it)
                         }
                         .onError {
                             error("", it)
@@ -34,6 +33,11 @@ class WeeksPresenter(val weeksService: WeeksService, val weeksView: WeeksView) :
                             weeksView.hideLoading()
                         }
         )
+    }
+
+    private fun showWeeks(weeks: List<Week>){
+        weeksView.showWeeks(weeks)
+        weeksView.hideLoading()
     }
 
     private fun loadWeeksObservable(): Observable<List<Week>> {
