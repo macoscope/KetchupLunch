@@ -7,7 +7,7 @@ import android.widget.TextView
 import com.macoscope.ketchuplunch.R
 import com.macoscope.ketchuplunch.model.lunch.Week
 import org.jetbrains.anko.AnkoContext
-import java.util.*
+import java.util.ArrayList
 
 class WeeksAdapter : BaseAdapter() {
 
