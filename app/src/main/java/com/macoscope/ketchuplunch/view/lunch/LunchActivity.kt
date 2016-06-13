@@ -31,7 +31,7 @@ class LunchActivity : AppCompatActivity(), WeeksView, AdapterView.OnItemSelected
         LunchUI().setContentView(this)
         setSupportActionBar(findViewById(R.id.lunch_toolbar) as Toolbar?)
         viewPager = findViewById(R.id.lunch_pager_container) as ViewPager?
-        viewPager!!.adapter = DaysPagerAdapter(supportFragmentManager, DaysPagerAdapter.UNDEFINED_WEEK_INDEX)
+        selectAdapterForActiveWeek(DaysPagerAdapter.UNDEFINED_WEEK_INDEX)
         setupTabs(viewPager)
         setupPresenter()
     }
@@ -63,9 +63,8 @@ class LunchActivity : AppCompatActivity(), WeeksView, AdapterView.OnItemSelected
         progressDialog!!.dismiss()
     }
 
-    override fun selectActiveWeek(index: Long) {
-        viewPager!!.adapter = DaysPagerAdapter(supportFragmentManager, index)
-        viewPager!!.invalidate()
+    override fun selectAdapterForActiveWeek(weekIndex: Long) {
+        viewPager!!.adapter = DaysPagerAdapter(supportFragmentManager, weekIndex)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -81,12 +80,11 @@ class LunchActivity : AppCompatActivity(), WeeksView, AdapterView.OnItemSelected
     }
 
     override fun onNothingSelected(parent: AdapterView<*>?) {
-        throw UnsupportedOperationException()
+        selectAdapterForActiveWeek(DaysPagerAdapter.UNDEFINED_WEEK_INDEX)
     }
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-
-        selectActiveWeek(weeksAdapter!!.getItem(position).index)
+        selectAdapterForActiveWeek(weeksAdapter!!.getItem(position).index)
     }
 
     override fun showWeeks(weeks: List<Week>) {
@@ -97,5 +95,4 @@ class LunchActivity : AppCompatActivity(), WeeksView, AdapterView.OnItemSelected
         super.onActivityResult(requestCode, resultCode, data)
         weeksPresenter.onActivityResult(requestCode, resultCode)
     }
-
 }

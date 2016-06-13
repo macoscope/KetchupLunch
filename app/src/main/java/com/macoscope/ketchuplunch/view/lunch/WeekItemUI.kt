@@ -24,7 +24,5 @@ class WeekItemUI : AnkoComponent<ViewGroup> {
                 backgroundColor = ContextCompat.getColor(ctx, R.color.colorRed)
             }
         }
-
-
     }
 }
