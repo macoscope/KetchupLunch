@@ -3,10 +3,13 @@
     <string name="action_settings">Settings</string>
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="no_network">Internet connection is unavailable</string>
-
+    <string name="lunch_fetching_weeks">Fetching menus for weeks</string>
+    <string name="lunch_please_wait">Please wait…</string>
+    <string name="lunch_empty_menu">No menu loaded</string>
     <!-- login -->
     <string name="login_need_contacts_permission">This app needs to access your Google account (via Contacts).
         Otherwise app won\'t work</string>
     <string name="login_need_google_play">This app requires Google Play Services. Please install Google Play Services on your device and relaunch this app.</string>
+    <string name="lunch_weeks">Weeks</string>
 
 </resources>

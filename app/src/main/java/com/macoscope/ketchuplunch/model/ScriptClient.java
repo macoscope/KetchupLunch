@@ -25,7 +25,6 @@ public class ScriptClient {
     private String projectKey = BuildConfig.PROJECT_KEY;
     private String environment = BuildConfig.ENV;
 
-
     public ScriptClient(GoogleAccountCredential credential, String rootUrl) {
         JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
         script = new com.google.api.services.script.Script.Builder(
@@ -37,17 +36,24 @@ public class ScriptClient {
 
     public <T> T getDataFromApi(String function, List<Object> parameters) throws IOException, GoogleAuthException {
         ArrayList<Object> params = new ArrayList<>(parameters);
-        params.add(environment);
+        params.add(getEnvIndex(parameters), environment);
         ExecutionRequest request = new ExecutionRequest().setFunction(function).setParameters(params)
                 .setDevMode(false);
         Operation operation = script.scripts().run(projectKey, request).execute();
-
 
         if (operation.getResponse() != null &&
                 operation.getResponse().get("result") != null) {
             return (T) (operation.getResponse().get("result"));
         } else {
             throw new IOException(getScriptErrorMessage(operation));
+        }
+    }
+
+    private int getEnvIndex(List<Object> parameters) {
+        if (parameters.size() >= 3) {
+            return 2;
+        } else {
+            return 0;
         }
     }
 

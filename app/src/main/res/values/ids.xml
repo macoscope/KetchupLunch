@@ -8,4 +8,5 @@
     <item name="lunch_tabs" type="id" />
     <item name="lunch_pager_container" type="id" />
     <item name="login_main_container" type="id" />
+    <item name="week_name" type="id" />
 </resources>

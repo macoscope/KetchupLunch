@@ -2,12 +2,19 @@ package com.macoscope.ketchuplunch.view.lunch
 
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentPagerAdapter
+import android.support.v4.app.FragmentStatePagerAdapter
 
-class DaysPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
+class DaysPagerAdapter(fm: FragmentManager, val weekIndex: Long) : FragmentStatePagerAdapter(fm) {
+
+    companion object {
+        val UNDEFINED_WEEK_INDEX: Long = Long.MIN_VALUE
+    }
 
     override fun getItem(position: Int): Fragment {
-        return LunchMenuFragment.newInstance(position)
+        return when (weekIndex) {
+            UNDEFINED_WEEK_INDEX -> LunchMenuEmptyFragment.newInstance()
+            else -> LunchMenuFragment.newInstance(weekIndex, position)
+        }
     }
 
     override fun getCount(): Int {
