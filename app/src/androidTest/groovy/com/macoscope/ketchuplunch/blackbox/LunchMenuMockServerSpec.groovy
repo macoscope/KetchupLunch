@@ -2,9 +2,7 @@ package com.macoscope.ketchuplunch.blackbox
 
 import android.content.Intent
 import android.support.test.InstrumentationRegistry
-import android.support.test.espresso.assertion.ViewAssertions
 import android.support.test.rule.ActivityTestRule
-import com.macoscope.ketchuplunch.R
 import com.macoscope.ketchuplunch.di.ScriptModule
 import com.macoscope.ketchuplunch.view.lunch.LunchActivity
 import io.appflate.restmock.RESTMockServer
@@ -13,11 +11,6 @@ import io.appflate.restmock.android.AndroidAssetsFileParser
 import io.appflate.restmock.android.AndroidLogger
 import org.junit.Rule
 import spock.lang.Specification
-
-import static android.support.test.espresso.Espresso.onView
-import static android.support.test.espresso.matcher.ViewMatchers.withText
-import static com.macoscope.ketchuplunch.RecyclerViewMatcher.withRecyclerView
-import static io.appflate.restmock.utils.RequestMatchers.pathContains
 
 class LunchMenuMockServerSpec extends Specification {
 
@@ -37,5 +30,6 @@ class LunchMenuMockServerSpec extends Specification {
             loginActivityRule.launchActivity(new Intent(Intent.ACTION_MAIN))
         then:
             //TODO assert view data
+            true
     }
 }
