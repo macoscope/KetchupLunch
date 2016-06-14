@@ -21,16 +21,15 @@ class LoginSpec extends Specification {
         loginFeature.cleanup()
     }
 
+    //TODO Exercice 7
     def "moves to lunch screen when permission is granted and account is chosen by the user"() {
         given:
             def account = "darek@macoscope.net"
         when:
             loginActivityRule.launchActivity(new Intent(Intent.ACTION_MAIN))
 
-            LunchFeature lunchFeature = loginFeature.dismissPermissionRationale()
-                    .acceptAccountPermission()
-                    .chooseAccount(account)
-        then:
+            //TODO implement test from LoginUiAutomatorSpec using Page Object
+
             lunchFeature.assertToolbarIsDisplayed()
     }
 

@@ -9,7 +9,6 @@ import android.support.test.InstrumentationRegistry
 import android.support.test.espresso.intent.Intents
 import android.support.test.rule.ActivityTestRule
 import android.support.test.uiautomator.UiDevice
-import com.macoscope.ketchuplunch.blackbox.UiAutomatorUtils
 import com.macoscope.ketchuplunch.di.LoginModule
 import com.macoscope.ketchuplunch.model.login.AccountPermission
 import com.macoscope.ketchuplunch.view.login.LoginActivity
@@ -56,22 +55,6 @@ public class LoginFeature {
     //ACTIONS:
     def launchActivity() {
         loginTestRule.launchActivity(new Intent(Intent.ACTION_MAIN))
-        return new LunchFeature()
-    }
-
-    def dismissPermissionRationale() {
-        UiAutomatorUtils.General.clickOnTextSilent(uiDevice, "OK")
-        return this
-    }
-
-    def acceptAccountPermission() {
-        UiAutomatorUtils.RuntimePermissionPopup.allowCurrentPermission(uiDevice)
-        return this
-    }
-
-    def chooseAccount(String account) {
-        UiAutomatorUtils.General.clickOnText(uiDevice, account)
-        UiAutomatorUtils.General.clickOnText(uiDevice, "OK")
         return new LunchFeature()
     }
 
