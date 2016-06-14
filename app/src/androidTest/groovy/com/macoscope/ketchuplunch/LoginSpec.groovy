@@ -29,7 +29,7 @@ class LoginSpec extends Specification {
             loginActivityRule.launchActivity(new Intent(Intent.ACTION_MAIN))
 
             //TODO implement test from LoginUiAutomatorSpec using Page Object
-
+        then:
             lunchFeature.assertToolbarIsDisplayed()
     }
 
