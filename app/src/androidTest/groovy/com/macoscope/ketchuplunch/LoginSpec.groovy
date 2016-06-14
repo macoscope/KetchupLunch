@@ -21,7 +21,7 @@ class LoginSpec extends Specification {
         loginFeature.cleanup()
     }
 
-    //TODO Exercice 7
+    //TODO Exercise 7
     def "moves to lunch screen when permission is granted and account is chosen by the user"() {
         given:
             def account = "darek@macoscope.net"
