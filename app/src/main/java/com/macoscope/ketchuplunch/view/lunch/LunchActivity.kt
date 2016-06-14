@@ -8,17 +8,19 @@ import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
 import android.widget.Spinner
 import com.macoscope.ketchuplunch.R
-import com.macoscope.ketchuplunch.di.AccountModule
 import com.macoscope.ketchuplunch.di.ScriptModule
 import com.macoscope.ketchuplunch.di.WeekModule
 import com.macoscope.ketchuplunch.model.lunch.Week
 import com.macoscope.ketchuplunch.presenter.WeeksPresenter
+import com.macoscope.ketchuplunch.view.login.LoginActivity
 import org.jetbrains.anko.indeterminateProgressDialog
 import org.jetbrains.anko.setContentView
+import org.jetbrains.anko.startActivity
 
 class LunchActivity : AppCompatActivity(), WeeksView, AdapterView.OnItemSelectedListener {
     private var viewPager: ViewPager? = null
@@ -42,7 +44,7 @@ class LunchActivity : AppCompatActivity(), WeeksView, AdapterView.OnItemSelected
     }
 
     private fun setupPresenter() {
-        weeksPresenter = WeekModule(AccountModule(this), ScriptModule(), this).provideWeeksPresenter()
+        weeksPresenter = WeekModule(this, ScriptModule(), this).provideWeeksPresenter()
         weeksPresenter.createView()
     }
 
@@ -73,6 +75,16 @@ class LunchActivity : AppCompatActivity(), WeeksView, AdapterView.OnItemSelected
         return true
     }
 
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when (item!!.itemId) {
+            R.id.log_out -> {
+                weeksPresenter.logOut()
+                return true
+            }
+            else -> return super.onOptionsItemSelected(item)
+        }
+    }
+
     private fun setupWeeksSpinner(weeksSpinner: Spinner) {
         weeksAdapter = WeeksAdapter()
         weeksSpinner.adapter = weeksAdapter
@@ -94,5 +106,10 @@ class LunchActivity : AppCompatActivity(), WeeksView, AdapterView.OnItemSelected
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         weeksPresenter.onActivityResult(requestCode, resultCode)
+    }
+
+    override fun startLoginActivity() {
+        startActivity<LoginActivity>()
+        finish()
     }
 }

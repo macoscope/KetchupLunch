@@ -11,5 +11,6 @@
         Otherwise app won\'t work</string>
     <string name="login_need_google_play">This app requires Google Play Services. Please install Google Play Services on your device and relaunch this app.</string>
     <string name="lunch_weeks">Weeks</string>
+    <string name="log_out">Log out</string>
 
 </resources>

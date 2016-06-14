@@ -15,4 +15,8 @@ open class GoogleCredentialWrapper(val context: Context) {
     open fun setSelectedAccountName(accountName: String) {
         userCredential.selectedAccountName = accountName
     }
+
+    open fun clearSelectedAccountName(){
+        userCredential.selectedAccountName = null
+    }
 }
