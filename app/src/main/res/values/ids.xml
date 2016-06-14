@@ -3,6 +3,7 @@
     <item name="lunch_menu_list" type="id" />
     <item name="lunch_menu_name" type="id" />
     <item name="lunch_menu_count" type="id" />
+    <item name="lunch_meal_type" type="id" />
     <item name="lunch_toolbar" type="id" />
     <item name="lunch_appbar" type="id" />
     <item name="lunch_tabs" type="id" />

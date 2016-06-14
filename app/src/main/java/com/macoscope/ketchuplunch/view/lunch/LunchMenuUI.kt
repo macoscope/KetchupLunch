@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import com.macoscope.ketchuplunch.R
+import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration
 import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration
 import org.jetbrains.anko.AnkoComponent
 import org.jetbrains.anko.AnkoContext
@@ -23,6 +24,7 @@ class LunchMenuUI(val listAdapter: LunchMenuAdapter) : AnkoComponent<Fragment> {
                     lparams(width = matchParent, height = matchParent)
                     layoutManager = LinearLayoutManager(ctx)
                     adapter = listAdapter
+                    addItemDecoration(StickyRecyclerHeadersDecoration(listAdapter))
                     addItemDecoration(HorizontalDividerItemDecoration
                             .Builder(ctx).color(Color.LTGRAY).size(dip(1)).showLastDivider().build())
                 }

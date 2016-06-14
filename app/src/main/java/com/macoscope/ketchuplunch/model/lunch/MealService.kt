@@ -15,10 +15,11 @@ class MealService(val scriptClient: ScriptClient, val userName: String) {
                 .filter { (it["name"] as String).isNotEmpty() }
                 .map {
                     it ->
-                    Meal(it["name"] as String, (it["count"] as BigDecimal).toInt(), (it["totalCount"] as BigDecimal).toInt())
+                    Meal(it["name"] as String, (it["count"] as BigDecimal).toInt(),
+                            (it["totalCount"] as BigDecimal).toInt(), it["type"] as String)
                 }
 
-        return meals
+        return meals.plus(meals)
     }
 }
 
