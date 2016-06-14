@@ -7,8 +7,8 @@ import com.macoscope.ketchuplunch.model.lunch.WeeksService
 import com.macoscope.ketchuplunch.presenter.WeeksPresenter
 import com.macoscope.ketchuplunch.view.lunch.WeeksView
 
-class WeekModule(context: Context, val scriptModule: ScriptModule, val weeksView: WeeksView) : AccountModule
-(context) {
+class WeekModule(context: Context, val scriptModule: ScriptModule, val weeksView: WeeksView) :
+        AccountModule(context) {
 
     companion object {
         var scriptClient: ScriptClient? = null
