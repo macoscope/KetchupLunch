@@ -19,7 +19,7 @@ class MealService(val scriptClient: ScriptClient, val userName: String) {
                             (it["totalCount"] as BigDecimal).toInt(), it["type"] as String)
                 }
 
-        return meals.plus(meals)
+        return meals
     }
 }
 
