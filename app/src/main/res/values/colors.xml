@@ -4,4 +4,5 @@
     <color name="colorPrimaryDark">@color/colorRed</color>
     <color name="colorAccent">@color/colorRed</color>
     <color name="colorRed">#d2524e</color>
+    <color name="lightGrey">#F5F5F5</color>
 </resources>
