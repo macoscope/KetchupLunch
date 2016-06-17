@@ -3,14 +3,6 @@
   "done": true,
   "response": {
     "@type": "type.googleapis.com/google.apps.script.v1.ExecutionResponse",
-    "result": [{
-      "name": "any meal",
-      "count": 0,
-      "totalCount": 0
-    }, {
-      "name": "Potato Soup",
-      "count": 2,
-      "totalCount": 4
-    }]
+    "result": []
   }
 }
