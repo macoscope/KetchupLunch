@@ -15,6 +15,10 @@ We decided to choose Kotlin as our programming language. There is some good stuf
 
 This application serves as an example for the post published on our blog: http://macoscope.com/blog/kotlin-anko-layouts/
 
+## Android UI Testing Workshop
+
+https://docs.google.com/presentation/d/1AdO5JA01a_szVEvFj_OgJNlgJAQKJPnmBXgbarUDYpM/edit
+
 ## Libraries Used
 - Kotlin Anko https://github.com/Kotlin/anko/
 - RxJava https://github.com/ReactiveX/RxJava/
