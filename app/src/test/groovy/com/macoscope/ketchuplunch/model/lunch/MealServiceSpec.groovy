@@ -37,4 +37,14 @@ class MealServiceSpec extends Specification {
         then:
             mealList.isEmpty()
     }
+
+    def "extracts username from email"() {
+        given:
+            String email = "darek@macoscope.net"
+        when:
+            String userName = objectUnderTest.extractUserName(email)
+        then:
+            userName == "darek"
+    }
+
 }
