@@ -9,7 +9,7 @@ class MealServiceSpec extends Specification {
     ScriptClient scriptClientStub = Stub(ScriptClient);
     MealService objectUnderTest = new MealService(scriptClientStub, "darek@macoscope.net");
 
-    def "maps library response to meal object"() {
+    def "maps library response to meal list"() {
         given:
             Map<String, Object> mealMap = ["name": "Zurek", "count": 0 as BigDecimal, "totalCount": 1 as BigDecimal,
                                            "type": "Zupa"]
