@@ -6,13 +6,13 @@ import com.macoscope.ketchuplunch.model.lunch.Meal
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersAdapter
 import org.jetbrains.anko.AnkoContext
 
-class LunchMenuAdapter(var mealList: List<Meal>) : RecyclerView.Adapter<LaunchMenuItemViewHolder>(),
+class LunchMenuAdapter(var mealList: List<Meal>) : RecyclerView.Adapter<LunchMenuItemViewHolder>(),
         StickyRecyclerHeadersAdapter<LunchHeaderViewHolder> {
 
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): LaunchMenuItemViewHolder? =
-            LaunchMenuItemViewHolder(LunchMenuItemUI().createView(AnkoContext.create(parent!!.context, parent)))
+    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): LunchMenuItemViewHolder? =
+            LunchMenuItemViewHolder(LunchMenuItemUI().createView(AnkoContext.create(parent!!.context, parent)))
 
-    override fun onBindViewHolder(holder: LaunchMenuItemViewHolder?, position: Int) {
+    override fun onBindViewHolder(holder: LunchMenuItemViewHolder?, position: Int) {
         holder!!.bind(mealList[position])
     }
 
