@@ -7,7 +7,7 @@ import com.macoscope.ketchuplunch.R
 import com.macoscope.ketchuplunch.model.lunch.Meal
 import org.jetbrains.anko.find
 
-class LaunchMenuItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+class LunchMenuItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     val name: TextView = itemView.find(R.id.lunch_menu_name)
     val count: TextView = itemView.find(R.id.lunch_menu_count)
 
